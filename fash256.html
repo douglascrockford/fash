@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body {
+	backround-color: khaki;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+pre {
+	margin-left: 2em;
+}
+</style>
+<title>Fash256: Fast hash function</title>
+</head>
+
+<body>
+<h1>Fash64: The Fast Hash Function</h1>
+<p><a href="crockford.com">Douglas Crockford</a><br>
+  2017-01-15</p>
+<p> Fash256 is an efficient hashing function. It crunches 64 bits at a time to
+ produce a 256 bit result. It might possibly be a cryptographic hash function,
+ but this has not been determined yet. More study is needed.</p>
+<p>Fash256 is a quadrupling of  <a href="fash64.html">Fash64</a>.</p>
+<p>This is an implementation in a mythical language.</p>
+<pre>
+def a_prime := 14695981039346656039
+def b_prime := 9999999999999999961
+def c_prime := 7777777777777777793
+def d_prime := 5555555555555555533
+
+# The state of the hash function is kept in eight variables.
+
+var a_result: uint64
+var b_result: uint64
+var c_result: uint64
+var d_result: uint64
+
+var a_sum: uint64
+var b_sum: uint64
+var c_sum: uint64
+var d_sum: uint64
+
+
+# The fash256_begin function initializes the result and sum variables.
+
+def fash256_begin() {
+    a_first_result := 6148914691236517205
+    b_first_result := 10540996613548315209
+    c_first_result := 2380225041768974402
+    d_first_result := 4684887383799251204
+
+    a_first_sum := 1171008911493925810
+    b_first_sum := 4296445844552291377
+    c_first_sum := 2528932112110770860
+    d_first_sum := 16753056069578187286
+}
+
+
+# The fash256_word function hashes one 64-bit word.
+
+def fash256_word(word: uint64) {
+
+# The fash256_word function does the work.
+# It takes a 64-bit word, and scrambles it into the hash.
+
+    var a_high: uint64
+    var b_high: uint64
+    var c_high: uint64
+    var d_high: uint64
+
+    var a_low: uint64
+    var b_low: uint64
+    var c_low: uint64
+    var d_low: uint64
+
+# Mix the word with the current state of the hash
+# and multiply it with the big prime.
+
+    a_high ; a_low := (a_result xor word) * a_prime
+    b_high ; b_low := (b_result xor word) * b_prime
+    c_high ; c_low := (c_result xor word) * c_prime
+    d_high ; d_low := (d_result xor word) * d_prime
+
+# Add the high part to the sum.
+
+    a_sum += a_high
+    b_sum += b_high
+    c_sum += c_high
+    d_sum += d_high
+
+# Mix the low part with a sum from another quadrant.
+
+    a_result := a_low xor d_sum
+    b_result := b_low xor a_sum
+    c_result := c_low xor b_sum
+    d_result := d_low xor c_sum
+}
+
+
+# The fash256_block function hashes an array of words.
+
+def fash256_block(block: array of uint64) {
+    block.each(fash256_word)
+}
+
+
+# The fash256_end function returns the result.
+
+def fash256_end() {
+    return [
+        a_result
+        b_result
+        c_result
+        d_result
+    ];
+}</pre>
+<p>A cryptographic hash function should have five properties:</p>
+<ol>
+  <li>It is one way only. It is not  possible to reverse the hashing process to uncover the input.</li>
+  <li>It is deterministic. A given input will always produce the same hash.</li>
+  <li>It is avalanching. A small change in the input will produce a big change in the hash.</li>
+  <li>It is fast.</li>
+  <li>It is non-colliding. It is infeasible to find two inputs with the same hash.</li>
+</ol>
+<p><a href="fash64.html">Fash64</a> delivers on the first four, but fails badly
+ on the fifth. First, its result is too short, which by itself makes collisions
+ inevitable. Even worse, it can be reset, which makes it trivial to construct
+ two inputs with the same hash.</p>
+<p>Fash256 corrects this by essentially doing <a href="fash64.html">Fash64</a>
+ four times with four different primes, each producing a quadrant of the result.
+ It is still possible to reset a quadrant, but resetting two quadrants is hard.
+ Resetting three quadrants is very hard. It is necessary to reset all four
+ quadrants in order to force a collision.</p>
+</body>
+</html>
