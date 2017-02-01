@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body {
+	backround-color: khaki;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+pre {
+	margin-left: 2em;
+}
+</style>
+<title>Srash64: The Fast Secure Random Number Generator Function</title>
+</head>
+
+<body>
+<h1>Srash64: The Fast Secure Random Number Generator Function</h1>
+<p><a href="crockford.com">Douglas Crockford</a><br>
+  2017-01-30</p>
+<p> Srash64 might be a secure random number generator function.</p>
+<p>It is an adaptation of <a href="fash256.html">Fash256</a>.</p>
+<p>This is an implementation in a mythical language.</p>
+<pre>
+def a_prime := 9999999999999999961
+def b_prime := 8888888888888888881
+def c_prime := 7777777777777777793
+def d_prime := 5555555555555555533
+
+# The state of the hash function is kept in eight variables.
+
+var a_product: uint64
+var b_product: uint64
+var c_product: uint64
+var d_product: uint64
+
+var a_sum: uint64
+var b_sum: uint64
+var c_sum: uint64
+var d_sum: uint64
+
+
+# The srash64_seed function initializes the srash64 rng function's state.
+
+def srash64_seed(seeds: array of 8 uint64) {
+    a_product := seeds[0]
+    b_product := seeds[1]
+    c_product := seeds[2]
+    d_product := seeds[3]
+
+    a_sum := seeds[4]
+    b_sum := seeds[5]
+    c_sum := seeds[6]
+    d_sum := seeds[7]
+}
+
+def srash64() {
+    var a_high: uint64
+    var b_high: uint64
+    var c_high: uint64
+    var d_high: uint64
+
+    var a_low: uint64
+    var b_low: uint64
+    var c_low: uint64
+    var d_low: uint64
+
+    a_high ; a_low := a_product * a_prime
+    b_high ; b_low := b_product * b_prime
+    c_high ; c_low := c_product * c_prime
+    d_high ; d_low := d_product * d_prime
+
+    a_sum += a_high
+    b_sum += b_high
+    c_sum += c_high
+    d_sum += d_high
+
+    a_product := a_low xor d_sum
+    b_product := b_low xor a_sum
+    c_product := c_low xor b_sum
+    d_product := d_low xor c_sum
+
+    return (a_product + c_product) xor (b_product + d_product)
+}
+</pre>
+</body>
+</html>

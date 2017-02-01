@@ -21,8 +21,17 @@ pre {
 <p><a href="crockford.com">Douglas Crockford</a><br>
   2017-01-13
 </p>
-<p> Fash64 is an efficient hashing function. It crunches 64 bits at a time to produce a 64 bit result. It can be used for implementing data structures (hash tables) and checksums.</p>
-<p>Fash64 relies on multiplication. In a single instruction, 64 bit multiply can do up to 63 left shifts and 63 additions. On most CPUs, the result of multiplication can be 128 bits,  divided over two registers. Fash64 uses the high 64 bits of the product as a 64 bit right shift that can quickly be fed back into the hash. Without that massive right shift, multiply tends to lose information that spills out the left, which would make it unsuitable for hashing. But we get good feedback from that high part, yielding good hashes.</p>
+<p>Fash64 is an efficient hashing function. It crunches 64 bits at a time to
+    produce a 64 bit result. It can be used for implementing data structures
+    (hash tables) and checksums.</p>
+<p>Fash64 relies on multiplication. In a single instruction, 64 bit multiply
+    can do up to 63 left shifts and 63 additions. On most CPUs, the result of
+    multiplication can be 128 bits,  divided over two registers. Fash64 uses
+    the high 64 bits of the product as a 64 bit right shift that can quickly be
+    fed back into the hash. Without that massive right shift, multiply tends to
+    lose information that spills out the left, which would make it unsuitable
+    for hashing. But we get good feedback from that high part, yielding good
+    hashes.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
 def prime := 5555565599556877777    # a large prime number
@@ -40,7 +49,7 @@ def fash64_begin() {
     sum := 1171008911493925810
 }
 
-    
+
 # The fash64_word function hashes one 64-bit word.
 
 def fash64_word(word: uint64) {
@@ -69,32 +78,49 @@ def fash64_word(word: uint64) {
 
 
 # The fash64_block function hashes an array of words.
-    
+
 def fash64_block(block: array of uint64) {
     block.each(fash64_word)
 }
 
 
 # The fash64_end function returns the result.
-    
+
 def fash64_end() {
     return result
 }</pre>
-<p>Most CPUs know how to do a multiply that produces a 128 bit product, but most programming languages do not, tossing away the valuable high bits. It is tragic that practical languages do not allow a statement like</p>
+<p>Most CPUs know how to do a multiply that produces a 128 bit product, but most
+    programming languages do not, tossing away the valuable high bits. It is
+    tragic that practical languages do not allow a statement like</p>
 <pre>high ; low := (result xor word) * prime</pre>
-<p>that deposits the product of the multiplication into the <code>high</code> and <code>low</code> variables.</p>
-<p>The <code>sum</code> variable deals with the possibility of<code> result xor word </code>producing zero. If we used</p>
+<p>that deposits the product of the multiplication into the <code>high</code>
+    and <code>low</code> variables.</p>
+<p>The <code>sum</code> variable deals with the possibility of<code> result xor
+    word </code>producing zero. If we used</p>
 <pre>result := low xor high</pre>
-<p>then <code>result</code> can become zero when <code>result</code> equals <code>word</code>, which losses the influence of everything that was hashed up to this point. We mitigate this with</p>
+<p>then <code>result</code> can become zero when <code>result</code> equals
+    <code>word</code>, which losses the influence of everything that was hashed
+    up to this point. We mitigate this with</p>
 <pre>sum += high
 result := low xor sum</pre>
-<p>The <code>sum</code> variable retains the influence of the earlier material, so the hash will still be good. This borrows an idea from  <a href="https://en.wikipedia.org/wiki/Fletcher's_checksum">Fletcher&rsquo;s Checksum</a>. The likelihood that a <code>word</code> will match the current <code>result</code> and cause a reset is 1 in 2<sup>64</sup>. The <code>sum</code> makes a reset even less likely.</p>
-<p>Use of Fash64 is pretty simple. First call <code>fash64_begin</code> to initialize the hash function. Call <code>fash64_word</code> to hash each individual word, or <code>fash64_block</code> to hash a block of words. After all of the material has been hashed, call <code>fash64_end</code> to obtain the result. </p>
+<p>The <code>sum</code> variable retains the influence of the earlier material,
+    so the hash will still be good. This borrows an idea from
+    <a href="https://en.wikipedia.org/wiki/Fletcher's_checksum">Fletcher&rsquo;s Checksum</a>.
+    The likelihood that a <code>word</code> will match the current
+    <code>result</code> and cause a reset is 1 in 2<sup>64</sup>. The
+    <code>sum</code> makes a reset even less likely.</p>
+<p>Use of Fash64 is pretty simple. First call <code>fash64_begin</code> to
+    initialize the hash function. Call <code>fash64_word</code> to hash each
+    individual word, or <code>fash64_block</code> to hash a block of words.
+    After all of the material has been hashed, call <code>fash64_end</code> to
+    obtain the result. </p>
 <pre>
+# Example
+
 fash64_begin()
 fash64_block(packet)
 fash64_word(session_check_key)
 packet_check := fash64_end()</pre>
-<p>Github</p>
+<p>&nbsp;</p>
 </body>
 </html>

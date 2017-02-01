@@ -17,7 +17,7 @@ pre {
 </head>
 
 <body>
-<h1>Fash64: The Fast Hash Function</h1>
+<h1>Fash256: The Fast Hash Function</h1>
 <p><a href="crockford.com">Douglas Crockford</a><br>
   2017-01-15</p>
 <p> Fash256 is an efficient hashing function. It crunches 64 bits at a time to
@@ -47,15 +47,15 @@ var d_sum: uint64
 # The fash256_begin function initializes the result and sum variables.
 
 def fash256_begin() {
-    a_first_result := 6148914691236517205
-    b_first_result := 10540996613548315209
-    c_first_result := 2380225041768974402
-    d_first_result := 4684887383799251204
+    a_result := 6148914691236517205
+    b_result := 10540996613548315209
+    c_result := 2380225041768974402
+    d_result := 4684887383799251204
 
-    a_first_sum := 1171008911493925810
-    b_first_sum := 4296445844552291377
-    c_first_sum := 2528932112110770860
-    d_first_sum := 16753056069578187286
+    a_sum := 1171008911493925810
+    b_sum := 4296445844552291377
+    c_sum := 2528932112110770860
+    d_sum := 16753056069578187286
 }
 
 

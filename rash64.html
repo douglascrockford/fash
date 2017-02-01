@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body {
+	backround-color: khaki;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+pre {
+	margin-left: 2em;
+}
+</style>
+<title>Rash64: Fast Random Number Generator Function</title>
+</head>
+
+<body>
+<h1>Rash64: The Fast Random Function</h1>
+<p><a href="crockford.com">Douglas Crockford</a><br>
+  2017-01-30
+</p>
+<p>Rash64 is an efficient random number generator function.
+    Rash64 is an adaptation of the <a href="fash64.html">Fash64</a> function.</p>
+<p>This is an implementation in a mythical language.</p>
+<pre>
+def a_prime := 8888888888888888881
+def b_prime := 9999999999999999961
+
+# The state of the hash function is kept in four variables.
+
+var a_product: uint64
+var b_product: uint64
+var a_sum: uint64
+var b_sum: uint64
+
+
+# The rash64_seed function initializes the state of the random number generator.
+
+def rash64_seed(a: unit64, b: uint64) {
+    a_product := a
+    b_product := b
+    a_sum := 1
+    b_sum := 1
+}
+
+
+# The rash64 function returns one 64-bit word.
+
+def rash64() {
+    var a_high: uint64
+    var a_low: uint64
+    var b_high: uint64
+    var b_low: uint64
+
+    a_high ; a_low := a_product * a_prime
+    b_high ; b_low := b_product * b_prime
+
+    a_sum += a_high
+    b_sum += b_high
+
+    a_product := a_low xor b_sum
+    b_product := b_low xor a_sum
+    return a_product + b_product
+}</pre>
+<p>&nbsp;</p>
+</body>
+</html>
