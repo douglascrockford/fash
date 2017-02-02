@@ -100,18 +100,18 @@ d_first_sum    equ  0e87ecfbbd968e216h ; 16753056069578187286
 
 fash256_state segment page write
 
-a_result    qword
-b_result    qword
-c_result    qword
-d_result    qword
-a_sum       qword
-b_sum       qword
-c_sum       qword
-d_sum       qword
-save_r3     qword
-save_r6     qword
+a_result    qword   0
+b_result    qword   0
+c_result    qword   0
+d_result    qword   0
+a_sum       qword   0
+b_sum       qword   0
+c_sum       qword   0
+d_sum       qword   0
+save_r3     qword   0
+save_r6     qword   0
 
-            ends
+fash256_state ends
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -344,7 +344,7 @@ fash256_end: function_with_one_parameter;(result: uint64[4])
     mov     [r1+16],r10
     mov     [r1+24],r11
 
-    xor     x0,x0
+    xor     r0,r0
     ret
 
 fash256_code ends

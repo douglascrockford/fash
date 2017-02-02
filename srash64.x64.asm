@@ -5,7 +5,7 @@ title   srash64.x64.asm: srash64 for x64.
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
 
-; Fash256 is a fast secure random number generator function. 
+; Fash256 is a fast secure random number generator function.
 
 public srash64_seed;(seeds: uint64[8])
 
@@ -79,18 +79,18 @@ d_prime        equ  04D194C57DAD638CDh ;  5555555555555555533
 
 srash64_state segment page write
 
-a_product   qword
-b_product   qword
-c_product   qword
-d_product   qword
-a_sum       qword
-b_sum       qword
-c_sum       qword
-d_sum       qword
-save_r3     qword
-save_r6     qword
+a_product   qword   0
+b_product   qword   0
+c_product   qword   0
+d_product   qword   0
+a_sum       qword   0
+b_sum       qword   0
+c_sum       qword   0
+d_sum       qword   0
+save_r3     qword   0
+save_r6     qword   0
 
-            ends
+srash64_state ends
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -101,7 +101,7 @@ srash64_seed: function_with_one_parameter;(seeds: uint64[8])
     mov     r8,[r1]
     mov     r9,[r1+8]
     mov     r10,[r1+16]
-    mov     r11,[r+24]
+    mov     r11,[r1+24]
     mov     a_product,r8
     mov     b_product,r9
     mov     c_product,r10
@@ -110,7 +110,7 @@ srash64_seed: function_with_one_parameter;(seeds: uint64[8])
     mov     r8,[r1+32]
     mov     r9,[r1+40]
     mov     r10,[r1+48]
-    mov     r11,[r+56]
+    mov     r11,[r1+56]
     mov     a_sum,r8
     mov     b_sum,r9
     mov     c_sum,r10
@@ -140,10 +140,10 @@ srash64:
 ;       high ; low := a_product * a_prime
 
     mov     r0,a_prime
-    mul     r8       
-    
-;       a_product := low    
-           
+    mul     r8
+
+;       a_product := low
+
     mov     r8,r0
 
 ;       a_sum := a_sum + high
@@ -232,7 +232,7 @@ srash64_dump: function_with_one_parameter;(block: uint64[], length: uint64)
     mov     [r1],r8
     mov     [r1+8],r9
     mov     [r1+16],r10
-    mov     [r+24],r11
+    mov     [r1+24],r11
 
     mov     r8,a_sum
     mov     r9,b_sum
@@ -241,7 +241,7 @@ srash64_dump: function_with_one_parameter;(block: uint64[], length: uint64)
     mov     [r1+32],r8
     mov     [r1+40],r9
     mov     [r1+48],r10
-    mov     [r+56],r11
+    mov     [r1+56],r11
 
     xor     r0,r0
     ret

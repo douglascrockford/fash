@@ -5,7 +5,7 @@ title   rash64.x64.asm: rash64 for x64.
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
 
-; Rash64 is a fast random number generating function. 
+; Rash64 is a fast random number generating function.
 
 public rash64;()
 
@@ -97,7 +97,7 @@ rash64_seed: function_with_two_parameters;(a: uint64, b: unit64)
 
     pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-rash64: 
+rash64:
 ;   returns hash: uint64
 
 ; Register assignments:
@@ -123,7 +123,7 @@ rash64:
 
 ;   a_sum := a_sum + a_high
 
-    add     r10,r2      
+    add     r10,r2
 
 ;   b_high, b_low := b_product * b_prime
 
