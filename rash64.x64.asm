@@ -60,19 +60,15 @@ pad macro
 
 ; The key to rash is multiplication by big prime numbers.
 
-a_prime     equ     07b5bad595e238e31h ;  8888888888888888881
-b_prime     equ     08AC7230489E7FFD9h ;  9999999999999999961
-a_default   equ     05555555555555555h ;  6148914691236517205
-b_default   equ     01040426696698bb2h ;  1171008911493925810
+a_prime     equ     09a3298afb5ac7173h ; 11111111111111111027
+a_default   equ     02E426101834D5517h ;  3333333333333333271  
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 rash64_state segment para write
 
 a_product   qword   a_default
-b_product   qword   b_default
 a_sum       qword   1
-b_sum       qword   1
 
 rash64_state ends
 
@@ -80,19 +76,13 @@ rash64_state ends
 
 rash64_code segment para execute
 
-rash64_seed: function_with_two_parameters;(a: uint64, b: unit64)
+rash64_seed: function_with_one_parameter;(seed: uint64)
 
-; Register assignments:
-;   r1  a
-;   r2  b
-
-; Store the arguments.
+; Store the argument.
 
     mov     r0,1
     mov     a_product,r1
-    mov     b_product,r2
-    mov     a_sum,r0
-    mov     b_sum,r0
+    mov     a_sum,1
     ret
 
     pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -100,57 +90,29 @@ rash64_seed: function_with_two_parameters;(a: uint64, b: unit64)
 rash64:
 ;   returns hash: uint64
 
-; Register assignments:
-;   r0  low
-;   r1  prime
-;   r2  high
-;   r8  a_product
-;   r9  b_product
-;   r10 a_sum
-;   r11 b_sum
-
-    mov     r8,a_product
-    mov     r9,b_product
+    mov     r0,a_product
     mov     r10,a_sum
-    mov     r11,b_sum
 
-;   a_high, a_low := a_product * a_prime
+;       a_high, a_low := a_product * a_prime
 
     mov     r1,a_prime
-    mov     r0,r8
     mul     r1          ; r2,r0 is the unsigned product of a_product * a_prime
     mov     r8,r0
 
-;   a_sum := a_sum + a_high
+;       old_a_sum := a_sum
+;       a_sum := a_sum + a_high
 
+    mov     r11,r10
     add     r10,r2
-
-;   b_high, b_low := b_product * b_prime
-
-    mov     r1,b_prime
-    mov     r0,r9
-    mul     r1          ; r2,r0 is the unsigned product of b_product * b_prime
-    mov     r9,r0
-
-;   b_sum := b_sum + b_high
-
-    add     r11,r2
-
-;   a_product := a_low xor b_sum
-;   b_product := b_low xor a_sum
-
-    xor     r8,r11
-    xor     r9,r10
-
-    mov     a_product,r8
-    mov     b_product,r9
     mov     a_sum,r10
-    mov     b_sum,r11
 
-;   return a_product + b_product
 
-    mov     r0,r8
-    add     r0,r9
+;       a_product := a_low xor a_sum
+;       return a_low + old_a_sum
+
+    xor     r10,r0
+    add     r0,r11
+    mov     a_product,r10
     ret
 
 rash64_code ends

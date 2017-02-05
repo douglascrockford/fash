@@ -70,10 +70,10 @@ pad macro
 
 ; Constants:
 
-a_prime        equ  08AC7230489E7FFD9h ;  9999999999999999961
-b_prime        equ  07b5bad595e238e31h ;  8888888888888888881
-c_prime        equ  06BF037AE325F1C81h ;  7777777777777777793
-d_prime        equ  04D194C57DAD638CDh ;  5555555555555555533
+a_prime     equ     09a3298afb5ac7173h ; 11111111111111111027
+b_prime     equ     08AC7230489E7FFD9h ;  9999999999999999961
+c_prime     equ     06BF037AE325F1C17h ;  7777777777777777687 
+d_prime     equ     04D194C57DAD638CDh ;  5555555555555555533
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 

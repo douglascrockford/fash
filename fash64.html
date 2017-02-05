@@ -19,7 +19,7 @@ pre {
 <body>
 <h1>Fash64: The Fast Hash Function</h1>
 <p><a href="crockford.com">Douglas Crockford</a><br>
-  2017-01-13
+  2017-02-02
 </p>
 <p>Fash64 is an efficient hashing function. It crunches 64 bits at a time to
     produce a 64 bit result. It can be used for implementing data structures
@@ -34,7 +34,7 @@ pre {
     hashes.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
-def prime := 5555565599556877777    # a large prime number
+def prime := 9999999999999999961    # a large prime number
 
 # The state of the hash function is kept in two variables.
 
@@ -45,8 +45,8 @@ var sum: uint64                     # running sum
 # The fash64_begin function initializes the result and sum variables.
 
 def fash64_begin() {
-    result := 6148914691236517205
-    sum := 1171008911493925810
+    result := 8888888888888888881
+    sum := 3333333333333333271
 }
 
 

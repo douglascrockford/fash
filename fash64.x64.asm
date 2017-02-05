@@ -77,9 +77,9 @@ pad macro
 
 ; The key to fash is multiplication by a big prime number.
 
-prime       equ     04D19557A67F7BDD1h ;  5555565599556877777
-product_1st equ     05555555555555555h ;  6148914691236517205
-sum_1st     equ     01040426696698bb2h ;  1171008911493925810
+prime       equ     08AC7230489E7FFD9h ;  9999999999999999961
+product_1st equ     07b5bad595e238e31h ;  8888888888888888881
+sum_1st     equ     02E426101834D5517h ;  3333333333333333271
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 

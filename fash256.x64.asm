@@ -79,37 +79,37 @@ pad macro
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-; Constants:
+; Constants: 
 
-a_prime        equ  0CBF29CE484222327h ; 14695981039346656039
-b_prime        equ  08AC7230489E7FFD9h ;  9999999999999999961
-c_prime        equ  06BF037AE325F1C81h ;  7777777777777777793
-d_prime        equ  04D194C57DAD638CDh ;  5555555555555555533
+a_prime         equ     09a3298afb5ac7173h ; 11111111111111111027
+b_prime         equ     08AC7230489E7FFD9h ;  9999999999999999961
+c_prime         equ     06BF037AE325F1C17h ;  7777777777777777687 
+d_prime         equ     04D194C57DAD638CDh ;  5555555555555555533
 
-a_first_result equ  05555555555555555h ;  6148914691236517205
-b_first_result equ  09249249249249249h ; 10540996613548315209
-c_first_result equ  02108421084210842h ;  2380225041768974402
-d_first_result equ  04104104104104104h ;  4684887383799251204
+a_1st_result    equ     02E426101834D5517h ;  3333333333333333271
+b_1st_result    equ     03DADD6ACAF11C6F9h ;  4444444444444444409
+c_1st_result    equ     05C84C203069AAA7Bh ;  6666666666666666619
+d_1st_result    equ     07b5bad595e238e31h ;  8888888888888888881
 
-a_first_sum    equ  01040426696698bb2h ;  1171008911493925810
-b_first_sum    equ  03ba00abb693e1431h ;  4296445844552291377
-c_first_sum    equ  02318925b6b70daach ;  2528932112110770860
-d_first_sum    equ  0e87ecfbbd968e216h ; 16753056069578187286
+a_1st_sum       equ     01040426696698bb2h ;  1171008911493925810
+b_1st_sum       equ     03ba00abb693e1431h ;  4296445844552291377
+c_1st_sum       equ     00F6B75AB2BC4717Dh ;  1111111111111111037
+d_1st_sum       equ     01ED6EB565788E361h ;  2222222222222222177
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 fash256_state segment page write
 
-a_result    qword   0
-b_result    qword   0
-c_result    qword   0
-d_result    qword   0
-a_sum       qword   0
-b_sum       qword   0
-c_sum       qword   0
-d_sum       qword   0
-save_r3     qword   0
-save_r6     qword   0
+a_result        qword   0
+b_result        qword   0
+c_result        qword   0
+d_result        qword   0
+a_sum           qword   0
+b_sum           qword   0
+c_sum           qword   0
+d_sum           qword   0
+save_r3         qword   0
+save_r6         qword   0
 
 fash256_state ends
 
@@ -121,29 +121,29 @@ fash256_begin:
 
 ; Initialize the products and sums.
 
-; a_result := a_first_result
-; b_result := b_first_result
-; c_result := c_first_result
-; d_result := d_first_result
+; a_result := a_1st_result
+; b_result := b_1st_result
+; c_result := c_1st_result
+; d_result := d_1st_result
 
-    mov     r8,a_first_result
-    mov     r9,b_first_result
-    mov     r10,c_first_result
-    mov     r11,d_first_result
+    mov     r8,a_1st_result
+    mov     r9,b_1st_result
+    mov     r10,c_1st_result
+    mov     r11,d_1st_result
     mov     a_result,r8
     mov     b_result,r9
     mov     c_result,r10
     mov     d_result,r11
 
-; a_sum := a_first_sum
-; b_sum := b_first_sum
-; c_sum := c_first_sum
-; d_sum := d_first_sum
+; a_sum := a_1st_sum
+; b_sum := b_1st_sum
+; c_sum := c_1st_sum
+; d_sum := d_1st_sum
 
-    mov     r8,a_first_sum
-    mov     r9,b_first_sum
-    mov     r10,c_first_sum
-    mov     r11,d_first_sum
+    mov     r8,a_1st_sum
+    mov     r9,b_1st_sum
+    mov     r10,c_1st_sum
+    mov     r11,d_1st_sum
     mov     a_sum,r8
     mov     b_sum,r9
     mov     c_sum,r10
