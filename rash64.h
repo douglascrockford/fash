@@ -3,7 +3,7 @@
 The rash64 header file. This is the companion to rash64.asm.
 
 
-2017-02-01
+2017-02-02
 Public Domain
 
 No warranty.
