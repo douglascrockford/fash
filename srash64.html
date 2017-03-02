@@ -26,34 +26,54 @@ pre {
 <pre>
 def a_prime := 11111111111111111027
 def b_prime := 9999999999999999961
-def c_prime := 7777777777777777793
-def d_prime := 5555555555555555533
+def c_prime := 8888888888888888881
+def d_prime := 7777777777777777793
+def e_prime := 6666666666666666619
+def f_prime := 5555555555555555533
+def g_prime := 4444444444444444409
+def h_prime := 3333333333333333271
 
-# The state of the hash function is kept in eight variables.
+# The state of the hash function is kept in 16 variables.
 
 var a_product: uint64
 var b_product: uint64
 var c_product: uint64
 var d_product: uint64
+var e_product: uint64
+var f_product: uint64
+var g_product: uint64
+var h_product: uint64
 
 var a_sum: uint64
 var b_sum: uint64
 var c_sum: uint64
 var d_sum: uint64
+var e_sum: uint64
+var f_sum: uint64
+var g_sum: uint64
+var h_sum: uint64
 
 
-# The srash64_seed function initializes the srash64 rng function's state.
+# The srash64_seed function initializes the srash64 rng function's state. The seed contains 1024 bits.
 
-def srash64_seed(seeds: array of 8 uint64) {
+def srash64_seed(seeds: array of 16 uint64) {
     a_product := seeds[0]
     b_product := seeds[1]
     c_product := seeds[2]
     d_product := seeds[3]
+    e_product := seeds[4]
+    f_product := seeds[5]
+    g_product := seeds[6]
+    h_product := seeds[7]
 
-    a_sum := seeds[4]
-    b_sum := seeds[5]
-    c_sum := seeds[6]
-    d_sum := seeds[7]
+    a_sum := seeds[8]
+    b_sum := seeds[9]
+    c_sum := seeds[10]
+    d_sum := seeds[11]
+    e_sum := seeds[12]
+    f_sum := seeds[13]
+    g_sum := seeds[14]
+    h_sum := seeds[15]
 }
 
 def srash64() {
@@ -61,28 +81,48 @@ def srash64() {
     var b_high: uint64
     var c_high: uint64
     var d_high: uint64
+    var e_high: uint64
+    var f_high: uint64
+    var g_high: uint64
+    var h_high: uint64
 
     var a_low: uint64
     var b_low: uint64
     var c_low: uint64
     var d_low: uint64
+    var e_low: uint64
+    var f_low: uint64
+    var g_low: uint64
+    var h_low: uint64
 
     a_high ; a_low := a_product * a_prime
     b_high ; b_low := b_product * b_prime
     c_high ; c_low := c_product * c_prime
     d_high ; d_low := d_product * d_prime
+    e_high ; e_low := e_product * e_prime
+    f_high ; f_low := f_product * f_prime
+    g_high ; g_low := g_product * g_prime
+    h_high ; h_low := h_product * h_prime
 
     a_sum += a_high
     b_sum += b_high
     c_sum += c_high
     d_sum += d_high
+    e_sum += e_high
+    f_sum += f_high
+    g_sum += g_high
+    h_sum += h_high
 
-    a_product := a_low xor d_sum
+    a_product := a_low xor h_sum
     b_product := b_low xor a_sum
     c_product := c_low xor b_sum
     d_product := d_low xor c_sum
+    e_product := e_low xor d_sum
+    f_product := f_low xor e_sum
+    g_product := g_low xor f_sum
+    h_product := h_low xor g_sum
 
-    return (a_product + c_product) xor (b_product + d_product)
+    return ((a_product + e_product) xor (b_product + f_product)) + ((c_product + g_product) xor (d_product + h_product))
 }
 </pre>
 </body>
