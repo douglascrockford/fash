@@ -1,11 +1,11 @@
 title   srash64.x64.asm: srash64 for x64.
 
-; 2017-03-02
+; 2017-03-12
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
 
-; Fash256 is a fast secure random number generator function.
+; srash64 is a fast secure random number generator function.
 
 public srash64_seed;(seeds: uint64[16])
 
