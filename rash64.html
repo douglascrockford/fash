@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body {
+	backround-color: khaki;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+pre {
+	margin-left: 2em;
+}
+</style>
+<title>Rash64: The Fast Insecure Random Number Generator Function</title>
+</head>
+
+<body>
+<h1>Rash64: The Fast Insecure Random Number Generator Function</h1>
+<p><a href="crockford.com">Douglas Crockford</a><br>
+  2017-03-13</p>
+<p> Rash64 is a fast but insecure  random number generator function. There are two candidate functions shown here. We need to determine which one is better, and if the better one is any good.</p>
+<p>It is an adaptation of <a href="fash64.html">Fash64</a>.</p>
+<p>This is an implementation in a mythical language.</p>
+<pre>
+def prime := 9999999999999999961
+
+# The state of the random number generator function is kept in 2 variables.
+
+var result: uint64
+var sum: uint64
+
+def rash64_seed(seed: uint64) {
+    result : seed
+    sum : 1
+}
+
+def rash64() {<br>    var high<br>    var low<br>    high ; low : result * prime<br>    sum +: high<br>    result : low xor sum<br>    return result<br>}
+
+
+def rash64c() {<br>    var high<br>    var low<br>    high ; low : result * prime<br>    counter +: 1<br>    result : (low xor high) + counter<br>    return result<br>}<br>
+</pre>
+</body>
+</html>
