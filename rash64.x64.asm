@@ -108,5 +108,20 @@ rash64:
     mov     result,r0   ; return result
     ret
 
+    pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+rash64c:
+
+    mov     r0,result   ; high ; low : result * prime
+    mov     r2,prime
+    mov     r1,sum
+    mul     r2
+    add     r1,1        ; sum +: 1
+    mov     sum,r1
+    xor     r0,r2       ; result : (low xor high) + sum
+    add     r0,r1
+    mov     result,r0   ; return result
+    ret
+
 rash64_code ends
     end
