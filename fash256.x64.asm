@@ -1,6 +1,6 @@
 title   fash256.x64.asm: fash256 for x64.
 
-; 2017-02-24
+; 2017-04-29
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -79,22 +79,22 @@ pad macro
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-; Constants: 
+; Constants:
 
 a_prime         equ     09a3298afb5ac7173h ; 11111111111111111027
 b_prime         equ     08AC7230489E7FFD9h ;  9999999999999999961
-c_prime         equ     06BF037AE325F1C17h ;  7777777777777777687 
+c_prime         equ     06BF037AE325F1C17h ;  7777777777777777687
 d_prime         equ     04D194C57DAD638CDh ;  5555555555555555533
 
-a_1st_result    equ     02E426101834D5517h ;  8888888888888888881
-b_1st_result    equ     03DADD6ACAF11C6F9h ;  6666666666666666619
-c_1st_result    equ     05C84C203069AAA7Bh ;  4444444444444444409
-d_1st_result    equ     07b5bad595e238e31h ;  2222222222222222177
+a_1st_result    equ     07B5BAD595E238E31h ;  8888888888888888881
+b_1st_result    equ     05C84C203069AAA7Bh ;  6666666666666666619
+c_1st_result    equ     03DADD6ACAF11C6F9h ;  4444444444444444409
+d_1st_result    equ     01ED6EB565788E361h ;  2222222222222222177
 
-a_1st_sum       equ     01040426696698bb2h ;  7777777777777777687
-b_1st_sum       equ     03ba00abb693e1431h ;  5555555555555555533
-c_1st_sum       equ     00F6B75AB2BC4717Dh ;  3333333333333333271
-d_1st_sum       equ     01ED6EB565788E361h ;  1111111111111111037
+a_1st_sum       equ     06BF037AE325F1C17h ;  7777777777777777687
+b_1st_sum       equ     04D194C57DAD638CDh ;  5555555555555555533
+c_1st_sum       equ     02E426101834D5517h ;  3333333333333333271
+d_1st_sum       equ     00F6B75AB2BC4717Dh ;  1111111111111111037
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 

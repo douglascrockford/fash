@@ -14,7 +14,7 @@ public rash64_seed;(seed: uint64)
 
 public rash64;()
 
-public rash64c()
+public rash64c;()
 
 ; The key to rash64 is multiplication by a big prime number yielding a 128 bit
 ; product. CPUs know how to do a 128:=64*64 bit unsigned multiply, but most

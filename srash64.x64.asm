@@ -1,6 +1,6 @@
 title   srash64.x64.asm: srash64 for x64.
 
-; 2017-03-12
+; 2017-04-29
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -123,35 +123,35 @@ srash64_seed: function_with_one_parameter;(seeds: uint64[16])
     mov     r10,[r1+16]
     mov     r11,[r1+24]
     mov     a_product,r8
-    mov     b_product,r9
-    mov     c_product,r10
-    mov     d_product,r11
+    mov     a_sum,r9
+    mov     b_product,r10
+    mov     b_sum,r11
 
     mov     r8,[r1+32]
     mov     r9,[r1+40]
     mov     r10,[r1+48]
     mov     r11,[r1+56]
-    mov     e_product,r8
-    mov     f_product,r9
-    mov     g_product,r10
-    mov     h_product,r11
+    mov     c_product,r8
+    mov     c_sum,r9
+    mov     d_product,r10
+    mov     d_sum,r11
 
     mov     r8,[r1+64]
     mov     r9,[r1+72]
     mov     r10,[r1+80]
     mov     r11,[r1+88]
-    mov     a_sum,r8
-    mov     b_sum,r9
-    mov     c_sum,r10
-    mov     d_sum,r11
+    mov     e_product,r8
+    mov     e_sum,r9
+    mov     f_product,r10
+    mov     f_sum,r11
 
     mov     r8,[r1+96]
     mov     r9,[r1+104]
     mov     r10,[r1+112]
     mov     r11,[r1+120]
-    mov     e_sum,r8
-    mov     f_sum,r9
-    mov     g_sum,r10
+    mov     g_product,r8
+    mov     g_sum,r9
+    mov     h_product,r10
     mov     h_sum,r11
 
     xor     r0,r0
@@ -185,7 +185,7 @@ srash64:
 
     mov     r10,b_product
     mov     r0,b_prime
-    mov     r11,b_prime
+    mov     r11,b_sum
     mul     r10
 
 ;       b_product := low xor a_sum
@@ -324,35 +324,35 @@ srash64:
 srash64_dump: function_with_one_parameter;(block: uint64[], length: uint64)
 
     mov     r8,a_product
-    mov     r9,b_product
-    mov     r10,c_product
-    mov     r11,d_product
+    mov     r9,a_sum
+    mov     r10,b_product
+    mov     r11,b_sum
     mov     [r1],r8
     mov     [r1+8],r9
     mov     [r1+16],r10
     mov     [r1+24],r11
 
-    mov     r8,e_product
-    mov     r9,f_product
-    mov     r10,g_product
-    mov     r11,h_product
+    mov     r8,c_product
+    mov     r9,c_sum
+    mov     r10,d_product
+    mov     r11,d_sum
     mov     [r1+32],r8
     mov     [r1+40],r9
     mov     [r1+48],r10
     mov     [r1+56],r11
 
-    mov     r8,a_sum
-    mov     r9,b_sum
-    mov     r10,c_sum
-    mov     r11,d_sum
+    mov     r8,e_product
+    mov     r9,e_sum
+    mov     r10,f_product
+    mov     r11,f_sum
     mov     [r1+64],r8
     mov     [r1+72],r9
     mov     [r1+80],r10
     mov     [r1+88],r11
 
-    mov     r8,e_sum
-    mov     r9,f_sum
-    mov     r10,g_sum
+    mov     r8,g_product
+    mov     r9,g_sum
+    mov     r10,h_product
     mov     r11,h_sum
     mov     [r1+96],r8
     mov     [r1+104],r9

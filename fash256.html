@@ -77,7 +77,7 @@ def fash256_word(word: uint64) {
     var d_low: uint64
 
 # Mix the word with the current state of the hash
-# and multiply it with the big prime.
+# and multiply it with the big primes.
 
     a_high ; a_low := (a_result xor word) * a_prime
     b_high ; b_low := (b_result xor word) * b_prime

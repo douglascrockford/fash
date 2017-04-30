@@ -1,7 +1,24 @@
 The Fash Fast Hash Functions
 
 Douglas Crockford
-2017-01-13
+2017-04-29
 Public Domain
 
-The Fash functions do rapid hashing with multiplication.
+The Fash functions do rapid hashing and random number generation with
+multiplication.
+
+This package contains six program files:
+
+    fash.h              A C header file
+    fash.c              An implementation in portable C
+    fash64.x64.asm      A fast implementation of fash64 in assembly language
+    fash256.x64.asm     A fast implementation of fash256 in assembly language
+    rash64.x64.asm      A fast implementation of rash64 in assembly language
+    srash64.x64.asm     A fast implementation of srash64 in assembly language
+
+This package also contains descriptions of the functions:
+
+    fash64.html         Practical hashing
+    fash256.html        Secure hashing
+    rash64.html         Practical random numbers
+    srash64.html        Secure random numbers
