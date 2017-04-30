@@ -1,7 +1,7 @@
 The Fash Fast Hash Functions
 
 Douglas Crockford
-2017-04-29
+2017-04-30
 Public Domain
 
 The Fash functions do rapid hashing and random number generation with
@@ -10,6 +10,7 @@ multiplication.
 This package contains six program files:
 
     fash.h              A C header file
+    uint64.h            Typedef include for uint64
     fash.c              An implementation in portable C
     fash64.x64.asm      A fast implementation of fash64 in assembly language
     fash256.x64.asm     A fast implementation of fash256 in assembly language
