@@ -22,9 +22,9 @@ static uint64 high_umul64(uint64 a, uint64 b) {
 /*
     Produce the upper 64 bits of a 64 bit * 64 bit unsigned multiplication.
     This is done by breaking the operands into 32 bit pieces, and using those
-    pieces in 4 separate multiplicaations that are added together.
+    pieces in 4 separate multiplications that are added together.
 
-    Since C is unable to compute the product a * b,
+    Since C is unable to correctly compute the product a * b,
 
                   xxxx xxxx   a
                 * xxxx xxxx   b
@@ -43,9 +43,9 @@ static uint64 high_umul64(uint64 a, uint64 b) {
         -------------------
         xxxx xxxx xxxx xxxx   done the hard way
 
-    There may be architecturally dependent ways to do this more efficiently.
+    There may be architecturally-dependent ways to do this more efficiently.
     For example, Arm64 has an instruction that implements this function. x64
-    has a multiplication instruction that can deliver the entire 128 bit 
+    has a multiplication instruction that can deliver the entire 128 bit
     product.
 */
 
@@ -210,7 +210,7 @@ uint64 rash64() {
 uint64 rash64c() {
     r64_sum += 1;
     r64_result = (
-        low_umul64(r64_result, 9999999999999999961LL) ^ 
+        low_umul64(r64_result, 9999999999999999961LL) ^
         high_umul64(r64_result, 9999999999999999961LL)
     ) + r64_sum;
     return r64_result;
