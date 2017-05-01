@@ -7,7 +7,7 @@ Public Domain
 The Fash functions do rapid hashing and random number generation with
 multiplication.
 
-This package contains six program files:
+This package contains seven program files:
 
     fash.h              A C header file
     uint64.h            Typedef include for uint64
