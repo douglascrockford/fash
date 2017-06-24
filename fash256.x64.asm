@@ -1,6 +1,6 @@
 title   fash256.x64.asm: fash256 for x64.
 
-; 2017-04-29
+; 2017-06-24
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -17,12 +17,10 @@ public fash256_block;(block: uint64[length], length: uint64)
 
 public fash256_end;(result: uint64[4])
 
-; All of the fash256 functions take a pointer to a fash256 data structure as
-; the first argument. To compute a fash256 value, first call fash256_begin to
-; initialize the hash function state. Call fash256_word for each 64-bit word
-; to be hashed. Call fash256_block with a block of words. After everything has
-; been hashed, call fash256_end to obtain the result. None of these functions
-; return a value.
+; To compute a fash256 value, first call fash256_begin to initialize the hash
+; function state. Call fash256_word for each 64-bit word to be hashed. Call
+; fash256_block with a block of words. After everything has been hashed, call
+; fash256_end to obtain the result. None of these functions return a value.
 
 ; The key to fash256 is multiplication by a big prime number yielding a 128 bit
 ; product. The high part of the product is added to a sum that is xored with
