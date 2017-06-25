@@ -1,6 +1,6 @@
 title   fash256.x64.asm: fash256 for x64.
 
-; 2017-06-24
+; 2017-06-25
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -267,36 +267,35 @@ fash256_block: function_with_two_parameters;(block: uint64[], length: uint64)
 each:
 
     mov     r3,[r6]     ; r3 is the next word
-    add     r6,8        ; advance the block pointer
-
-    xor     r8,r3       ; r8 is a_result xor word
     mov     r0,a_prime
+    add     r6,8        ; advance the block pointer
+    xor     r8,r3       ; r8 is a_result xor word
+
     mul     r8
-    add     r12,r2      ; r12 is high + a_sum
-    mov     r8,r0       ; r8 is low
-
     xor     r9,r3       ; r9 is b_result xor word
+    mov     r8,r0       ; r8 is low
     mov     r0,b_prime
+    add     r12,r2      ; r12 is high + a_sum
+
     mul     r9
-    add     r13,r2      ; r13 is high + b_sum
-    mov     r9,r0       ; r9 is low
-
     xor     r10,r3      ; r10 is c_result xor word
+    mov     r9,r0       ; r9 is low
     mov     r0,c_prime
+    add     r13,r2      ; r13 is high + b_sum
+
     mul     r10
-    add     r14,r2      ; r14 is high + c_sum
-    mov     r10,r0      ; r10 is low
-
     xor     r11,r3      ; r0 is d_result xor word
+    mov     r10,r0      ; r10 is low
     mov     r0,d_prime
-    mul     r11
-    add     r15,r2      ; r15 is high + d_sum
-    mov     r11,r0      ; r11 is low
+    add     r14,r2      ; r14 is high + c_sum
 
-    xor     r8,r15      ; mix d_sum into a_result
+    mul     r11
     xor     r9,r12      ; mix a_sum into b_result
     xor     r10,r13     ; mix b_sum into c_result
+    mov     r11,r0      ; r11 is low
+    add     r15,r2      ; r15 is high + d_sum
     xor     r11,r14     ; mix c_sum into d_result
+    xor     r8,r15      ; mix d_sum into a_result
 
     sub     r1,1        ; decrement the length
     jnz     each        ; repeat until done
