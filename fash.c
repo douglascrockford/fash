@@ -1,6 +1,6 @@
 /*  fash.c
     Douglas Crockford
-    2017-04-27
+    2017-05-02
 
     Public Domain
 
@@ -103,7 +103,7 @@ void fash64_word(uint64 word) {
     word ^= f64_product;
     uint64 low = low_umul64(word, 9999999999999999961LL);
     uint64 high = high_umul64(word, 9999999999999999961LL);
-    f64_sum = high + f64_sum;
+    f64_sum += high;
     f64_product = f64_sum ^ low;
 }
 
@@ -142,41 +142,33 @@ void fash256_begin() {
 }
 
 void fash256_word(uint64 word) {
-    uint64 a_high;
-    uint64 b_high;
-    uint64 c_high;
-    uint64 d_high;
-    uint64 a_low;
-    uint64 b_low;
-    uint64 c_low;
-    uint64 d_low;
 /*
      Mix the word with the current state of the hash
     and multiply it with the big primes.
 */
-    a_low = low_umul64(f256_a_result ^ word, 11111111111111111027LL);
-    b_low = low_umul64(f256_b_result ^ word, 9999999999999999961LL);
-    c_low = low_umul64(f256_c_result ^ word, 7777777777777777687LL);
-    d_low = low_umul64(f256_d_result ^ word, 5555555555555555533LL);
-    a_high = high_umul64(f256_a_result ^ word, 11111111111111111027LL);
-    b_high = high_umul64(f256_b_result ^ word, 9999999999999999961LL);
-    c_high = high_umul64(f256_c_result ^ word, 7777777777777777687LL);
-    d_high = high_umul64(f256_d_result ^ word, 5555555555555555533LL);
+    uint64 a_low = low_umul64(f256_a_result ^ word, 11111111111111111027LL);
+    uint64 b_low = low_umul64(f256_b_result ^ word, 9999999999999999961LL);
+    uint64 c_low = low_umul64(f256_c_result ^ word, 7777777777777777687LL);
+    uint64 d_low = low_umul64(f256_d_result ^ word, 5555555555555555533LL);
+
+    uint64 a_high = high_umul64(f256_a_result ^ word, 11111111111111111027LL);
+    uint64 b_high = high_umul64(f256_b_result ^ word, 9999999999999999961LL);
+    uint64 c_high = high_umul64(f256_c_result ^ word, 7777777777777777687LL);
+    uint64 d_high = high_umul64(f256_d_result ^ word, 5555555555555555533LL);
 /*
-    Add the high part to the sum.
+    Add the high parts to the sums.
 */
     f256_a_sum += a_high;
     f256_b_sum += b_high;
     f256_c_sum += c_high;
     f256_d_sum += d_high;
 /*
-    Mix the low part with a sum from another quadrant.
+    Mix the low parts with sums from another quadrant.
 */
     f256_a_result = a_low ^ f256_d_sum;
     f256_b_result = b_low ^ f256_a_sum;
     f256_c_result = c_low ^ f256_b_sum;
     f256_d_result = d_low ^ f256_c_sum;
-
 }
 
 void fash256_block(uint64 *block, uint64 length) {
