@@ -1,8 +1,8 @@
 /* fash.h
 
-The fash header file. 
+The fash header file.
 
-2017-04-25
+2017-07-21
 Public Domain
 */
 
@@ -20,7 +20,6 @@ extern void fash256_end(uint64 *result);
 
 extern void rash64_seed(uint64 seed);
 extern uint64 rash64();
-extern uint64 rash64c();
 
 extern void srash64_seed(uint64 *seeds);
 extern uint64 srash64();

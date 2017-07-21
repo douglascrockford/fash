@@ -187,24 +187,19 @@ void fash256_end(uint64 *result) {
 
 static uint64 r64_result;
 static uint64 r64_sum;
+static uint64 r64_counter;
 
 void rash64_seed(uint64 seed) {
     r64_result = seed;
-    r64_sum = 1;
+    r64_sum = 3333333333333333271LL;
+    r64_counter = 1;
 }
 
 uint64 rash64() {
+    r64_result ^= r64_counter;
+    r64_counter += 1;
     r64_sum += high_umul64(r64_result, 9999999999999999961LL);
     r64_result  = low_umul64(r64_result, 9999999999999999961LL) ^ r64_sum;
-    return r64_result;
-}
-
-uint64 rash64c() {
-    r64_sum += 1;
-    r64_result = (
-        low_umul64(r64_result, 9999999999999999961LL) ^
-        high_umul64(r64_result, 9999999999999999961LL)
-    ) + r64_sum;
     return r64_result;
 }
 

@@ -1,20 +1,15 @@
 title   rash64.x64.asm: rash64 for x64.
 
-; 2017-03-12
+; 2017-07-21
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
 
 ; rash64 is a fast insecure random number generator function.
-; rash64c is a slightly different insecure random number generator.
-; We need to determine if one is better than the other, and if the
-; better one is any good.
 
 public rash64_seed;(seed: uint64)
 
 public rash64;()
-
-public rash64c;()
 
 ; The key to rash64 is multiplication by a big prime number yielding a 128 bit
 ; product. CPUs know how to do a 128:=64*64 bit unsigned multiply, but most
@@ -69,6 +64,7 @@ pad macro
 ; Constant:
 
 prime     equ     08AC7230489E7FFD9h ;  9999999999999999961
+prime_3   equ     02E426101834D5517h ;  3333333333333333271
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -76,6 +72,7 @@ rash64_state segment page write
 
 result    qword   0
 sum       qword   0
+counter   qword   0
 
 rash64_state ends
 
@@ -85,9 +82,11 @@ rash64_code segment para execute
 
 rash64_seed: function_with_one_parameter;(seed: uint64)
 
-    mov     r0,1
+    mov     r0,prime_3
+    mov     r2,1
     mov     result,r1
     mov     sum,r0
+    mov     counter,r2
     ret
 
     pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -95,31 +94,21 @@ rash64_seed: function_with_one_parameter;(seed: uint64)
 rash64:
 
 ;   r0  low
+;   r1  sum
 ;   r2  high
+;   r8  counter
 
-
-    mov     r0,result   ; high ; low : result * prime
+    mov     r0,result   ; high ; low := (result xor counter) * prime
+    mov     r8,counter
     mov     r2,prime
+    xor     r0,r8
     mov     r1,sum
     mul     r2
-    add     r1,r2       ; sum +: high
+    add     r8,1        ; counter += 1
+    mov     counter,r8
+    add     r1,r2       ; sum += high
     mov     sum,r1
-    xor     r0,r1       ; result : low xor sum
-    mov     result,r0   ; return result
-    ret
-
-    pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-rash64c:
-
-    mov     r0,result   ; high ; low : result * prime
-    mov     r2,prime
-    mov     r1,sum
-    mul     r2
-    add     r1,1        ; sum +: 1
-    mov     sum,r1
-    xor     r0,r2       ; result : (low xor high) + sum
-    add     r0,r1
+    xor     r0,r1       ; result := low xor sum
     mov     result,r0   ; return result
     ret
 
