@@ -25,7 +25,7 @@ pre {
     produce a 64 bit result. It can be used for implementing data structures
     (hash tables) and checksums.</p>
 <p>Fash64 relies on multiplication. In a single instruction, 64 bit multiply
-    can do up to 63 left shifts and 63 additions. On most CPUs, the result of
+    can do up to 64 left shifts and 64 additions. On most CPUs, the product of
     multiplication can be 128 bits,  divided over two registers. Fash64 uses
     the high 64 bits of the product as a 64 bit right shift that can quickly be
     fed back into the hash. Without that massive right shift, multiply tends to
@@ -50,12 +50,12 @@ def fash64_begin() {
 }
 
 
-# The fash64_word function hashes one 64-bit word.
+# The fash64_word function hashes one 64 bit word.
 
 def fash64_word(word: uint64) {
 
 # The fash64_word function does the work.
-# It takes a 64-bit word, and scrambles it into the hash.
+# It takes a 64 bit word, and scrambles it into the hash.
 
     var high: uint64    # The high part of the product
     var low: uint64     # The low part of the product
@@ -99,7 +99,7 @@ def fash64_end() {
     word </code>producing zero. If we used</p>
 <pre>result := low xor high</pre>
 <p>then <code>result</code> can become zero when <code>result</code> equals
-    <code>word</code>, which losses the influence of everything that was hashed
+    <code>word</code>, which loses the influence of everything that was hashed
     up to this point. We mitigate this with</p>
 <pre>sum += high
 result := low xor sum</pre>
