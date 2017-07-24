@@ -1,6 +1,6 @@
 title   rash64.x64.asm: rash64 for x64.
 
-; 2017-07-21
+; 2017-07-24
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -82,11 +82,11 @@ rash64_code segment para execute
 
 rash64_seed: function_with_one_parameter;(seed: uint64)
 
-    mov     r0,prime_3
-    mov     r2,1
+    mov     r2,prime_3
+    xor     r0,r0
     mov     result,r1
-    mov     sum,r0
-    mov     counter,r2
+    mov     sum,r2
+    mov     counter,r0
     ret
 
     pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --

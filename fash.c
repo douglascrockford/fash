@@ -1,6 +1,6 @@
 /*  fash.c
     Douglas Crockford
-    2017-05-02
+    2017-07-24
 
     Public Domain
 
@@ -219,6 +219,7 @@ static uint64 sr_g_product;
 static uint64 sr_g_sum;
 static uint64 sr_h_product;
 static uint64 sr_h_sum;
+static uint64 sr_counter;
 
 void srash64_seed(uint64 *seeds) {
     sr_a_product = seeds[0];
@@ -237,9 +238,13 @@ void srash64_seed(uint64 *seeds) {
     sr_g_sum = seeds[13];
     sr_h_product = seeds[14];
     sr_h_sum = seeds[15];
+    sr_counter = 1;
 }
 
 uint64 srash64() {
+    sr_a_product ^= sr_counter;
+    sr_counter += 1;
+
     uint64 a_low = low_umul64(sr_a_product, 11111111111111111027LL);
     uint64 b_low = low_umul64(sr_b_product, 9999999999999999961LL);
     uint64 c_low = low_umul64(sr_c_product, 8888888888888888881LL);

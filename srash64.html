@@ -19,7 +19,7 @@ pre {
 <body>
 <h1>Srash64: The Fast Secure Random Number Generator Function</h1>
 <p><a href="crockford.com">Douglas Crockford</a><br>
-  2017-03-03</p>
+  2017-07-24</p>
 <p> Srash64 might be a secure random number generator function.</p>
 <p>It is an adaptation of <a href="fash256.html">Fash256</a>.</p>
 <p>This is an implementation in a mythical language.</p>
@@ -51,6 +51,7 @@ var g_product: uint64
 var g_sum: uint64
 var h_product: uint64
 var h_sum: uint64
+var counter: uint64
 
 def srash64_seed(seeds: array of 16 uint64) {
 
@@ -73,6 +74,7 @@ def srash64_seed(seeds: array of 16 uint64) {
     g_sum := seeds[13]
     h_product := seeds[14]
     h_sum := seeds[15]
+    counter := 0
 }
 
 def srash64() {
@@ -94,7 +96,7 @@ def srash64() {
     var g_low: uint64
     var h_low: uint64
 
-    a_high ; a_low := a_product * a_prime
+    a_high ; a_low := (a_product xor counter) * a_prime
     b_high ; b_low := b_product * b_prime
     c_high ; c_low := c_product * c_prime
     d_high ; d_low := d_product * d_prime
@@ -102,6 +104,8 @@ def srash64() {
     f_high ; f_low := f_product * f_prime
     g_high ; g_low := g_product * g_prime
     h_high ; h_low := h_product * h_prime
+    
+    counter += 1
 
     a_sum += a_high
     b_sum += b_high

@@ -19,7 +19,7 @@ pre {
 <body>
 <h1>Rash64: The Fast Insecure Random Number Generator Function</h1>
 <p><a href="crockford.com">Douglas Crockford</a><br>
-  2017-07-21</p>
+  2017-07-24</p>
 <p> Rash64 is a fast but insecure random number generator function. It is an adaptation of <a href="fash64.html">Fash64</a>.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
@@ -34,7 +34,7 @@ var counter: uint64
 def rash64_seed(seed: uint64) {
     result := seed
     sum := 3333333333333333271
-    counter := 1
+    counter := 0
 }
 
 def rash64() {

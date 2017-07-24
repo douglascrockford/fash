@@ -1,6 +1,6 @@
 title   srash64.x64.asm: srash64 for x64.
 
-; 2017-04-29
+; 2017-07-24
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -108,6 +108,8 @@ g_sum       qword   0
 h_product   qword   0
 h_sum       qword   0
 
+counter     qword   0
+
 srash64_state ends
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -155,6 +157,7 @@ srash64_seed: function_with_one_parameter;(seeds: uint64[16])
     mov     h_sum,r11
 
     xor     r0,r0
+    mov     counter,r0
     ret
 
     pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -165,12 +168,19 @@ srash64:
 ;   r2  high
 
 
-;       high ; low := a_product * a_prime
+;       high ; low := (a_product xor counter) * a_prime
 
     mov     r8,a_product
+    mov     r10,counter
     mov     r0,a_prime
+    xor     r8,r10
     mov     r9,a_sum
     mul     r8
+
+;       counter += 1
+
+    add     r10,1
+    mov     counter,r10
 
 ;       a_product := low
 
