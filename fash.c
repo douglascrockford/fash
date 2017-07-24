@@ -46,7 +46,7 @@ static uint64 high_umul64(uint64 a, uint64 b) {
     There may be architecturally-dependent ways to do this more efficiently.
     For example, Arm64 has an instruction that implements this function. x64
     has a multiplication instruction that can deliver the entire 128 bit
-    product.
+    product in rax and rdx.
 */
 
 /*
@@ -192,7 +192,7 @@ static uint64 r64_counter;
 void rash64_seed(uint64 seed) {
     r64_result = seed;
     r64_sum = 3333333333333333271LL;
-    r64_counter = 1;
+    r64_counter = 0;
 }
 
 uint64 rash64() {
@@ -238,7 +238,7 @@ void srash64_seed(uint64 *seeds) {
     sr_g_sum = seeds[13];
     sr_h_product = seeds[14];
     sr_h_sum = seeds[15];
-    sr_counter = 1;
+    sr_counter = 0;
 }
 
 uint64 srash64() {
