@@ -73,12 +73,12 @@ pad macro
 
 a_prime     equ     09a3298afb5ac7173h ; 11111111111111111027
 b_prime     equ     08AC7230489E7FFD9h ;  9999999999999999961
-c_prime     equ     07B5BAD595E238E31H ;  8888888888888888881
-d_prime     equ     06BF037AE325F1C81H ;  7777777777777777793
-e_prime     equ     05C84C203069AAA7BH ;  6666666666666666619
-f_prime     equ     04D194C57DAD638CDH ;  5555555555555555533
-g_prime     equ     03DADD6ACAF11C6F9H ;  4444444444444444409
-h_prime     equ     02E426101834D5517H ;  3333333333333333271
+c_prime     equ     07B5BAD595E238E31h ;  8888888888888888881
+d_prime     equ     06BF037AE325F1C81h ;  7777777777777777793
+e_prime     equ     05C84C203069AAA7Bh ;  6666666666666666619
+f_prime     equ     04D194C57DAD638CDh ;  5555555555555555533
+g_prime     equ     03DADD6ACAF11C6F9h ;  4444444444444444409
+h_prime     equ     02E426101834D5517h ;  3333333333333333271
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -166,7 +166,6 @@ srash64:
 
 ;   r0  low
 ;   r2  high
-
 
 ;       high ; low := (a_product xor counter) * a_prime
 
