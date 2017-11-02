@@ -1,6 +1,6 @@
 title   fash64.x64.asm: fash64 for x64.
 
-; 2017-01-12
+; 2017-11-02
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -77,7 +77,7 @@ pad macro
 
 ; The key to fash is multiplication by a big prime number.
 
-prime       equ     08AC7230489E7FFD9h ;  9999999999999999961
+prime       equ     09a3298afb5ac7173h ; 11111111111111111027
 product_1st equ     07b5bad595e238e31h ;  8888888888888888881
 sum_1st     equ     02E426101834D5517h ;  3333333333333333271
 

@@ -1,6 +1,6 @@
 /*  fash.c
     Douglas Crockford
-    2017-07-24
+    2017-11-02
 
     Public Domain
 
@@ -44,7 +44,7 @@ static uint64 high_umul64(uint64 a, uint64 b) {
         xxxx xxxx xxxx xxxx   done the hard way
 
     There may be architecturally-dependent ways to do this more efficiently.
-    For example, Arm64 has an instruction that implements this function. x64
+    For example, Arm64 has an instruction that implements this function. X64
     has a multiplication instruction that can deliver the entire 128 bit
     product in rax and rdx.
 */
@@ -101,8 +101,8 @@ void fash64_begin() {
 
 void fash64_word(uint64 word) {
     word ^= f64_product;
-    uint64 low = low_umul64(word, 9999999999999999961LL);
-    uint64 high = high_umul64(word, 9999999999999999961LL);
+    uint64 low = low_umul64(word, 11111111111111111027LL);
+    uint64 high = high_umul64(word, 11111111111111111027LL);
     f64_sum += high;
     f64_product = f64_sum ^ low;
 }
