@@ -1,6 +1,6 @@
 /*  fash.c
     Douglas Crockford
-    2017-11-02
+    2017-12-24
 
     Public Domain
 
@@ -248,7 +248,7 @@ uint64 srash64() {
     uint64 a_low = low_umul64(sr_a_product, 11111111111111111027LL);
     uint64 b_low = low_umul64(sr_b_product, 9999999999999999961LL);
     uint64 c_low = low_umul64(sr_c_product, 8888888888888888881LL);
-    uint64 d_low = low_umul64(sr_d_product, 7777777777777777793LL);
+    uint64 d_low = low_umul64(sr_d_product, 7777777777777777687LL);
     uint64 e_low = low_umul64(sr_e_product, 6666666666666666619LL);
     uint64 f_low = low_umul64(sr_f_product, 5555555555555555533LL);
     uint64 g_low = low_umul64(sr_g_product, 4444444444444444409LL);
@@ -257,7 +257,7 @@ uint64 srash64() {
     sr_a_sum += high_umul64(sr_a_product, 11111111111111111027LL);
     sr_b_sum += high_umul64(sr_b_product, 9999999999999999961LL);
     sr_c_sum += high_umul64(sr_c_product, 8888888888888888881LL);
-    sr_d_sum += high_umul64(sr_d_product, 7777777777777777793LL);
+    sr_d_sum += high_umul64(sr_d_product, 7777777777777777687LL);
     sr_e_sum += high_umul64(sr_e_product, 6666666666666666619LL);
     sr_f_sum += high_umul64(sr_f_product, 5555555555555555533LL);
     sr_g_sum += high_umul64(sr_g_product, 4444444444444444409LL);

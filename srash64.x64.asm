@@ -74,7 +74,7 @@ pad macro
 a_prime     equ     09a3298afb5ac7173h ; 11111111111111111027
 b_prime     equ     08AC7230489E7FFD9h ;  9999999999999999961
 c_prime     equ     07B5BAD595E238E31h ;  8888888888888888881
-d_prime     equ     06BF037AE325F1C81h ;  7777777777777777793
+d_prime     equ     06BF037AE325F1C17h ;  7777777777777777687
 e_prime     equ     05C84C203069AAA7Bh ;  6666666666666666619
 f_prime     equ     04D194C57DAD638CDh ;  5555555555555555533
 g_prime     equ     03DADD6ACAF11C6F9h ;  4444444444444444409
@@ -212,12 +212,12 @@ srash64:
 
     mov     r10,c_product
     mov     r0,c_prime
-    mov     r9,c_sum
     mul     r10
 
 ;       c_product := low xor b_sum
 
     xor     r0,r11
+    mov     r9,c_sum
     mov     c_product,r0
 
 ;       c_sum := c_sum + high
@@ -315,8 +315,8 @@ srash64:
     xor     r8,r11
     mov     a_product,r8
 
-;       return ((a_product + e_product) xor (b_product + f_product)) +
-;              ((c_product + g_product) xor (d_product + h_product))
+;       return ((a_product + e_product) xor (b_product + f_product))
+;            + ((c_product + g_product) xor (d_product + h_product))
 
     mov     r9,g_product    ; r9 is g
     add     r8,e_product    ; r8 is a + e
@@ -325,7 +325,7 @@ srash64:
     add     r0,d_product    ; r0 is d + h
     xor     r1,r8           ; r1 is (a + e) xor (b + f)
     xor     r0,r9           ; r0 is (c + g) xor (d + h)
-    add     r0,r1           ; r0 is ((a + e) xor (b + f)) + ((c + g) xor (d + h))
+    add     r0,r1           ; r0 = ((a + e) xor (b + f)) + ((c + g) xor (d + h))
     ret
 
     pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --

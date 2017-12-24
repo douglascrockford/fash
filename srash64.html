@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <style>
 body {
 	backround-color: khaki;
@@ -26,7 +26,7 @@ pre {
 def a_prime := 11111111111111111027
 def b_prime := 9999999999999999961
 def c_prime := 8888888888888888881
-def d_prime := 7777777777777777793
+def d_prime := 7777777777777777687
 def e_prime := 6666666666666666619
 def f_prime := 5555555555555555533
 def g_prime := 4444444444444444409
@@ -54,7 +54,7 @@ var counter: uint64
 
 def srash64_seed(seeds: array of 16 uint64) {
 
-# The srash64_seed function initializes the srash64 rng function's state. The seed contains 1024 bits. 
+# The srash64_seed function initializes the srash64 rng function's state. The seed contains 1024 bits.
 # The seed must contain at least one 1 bit.
 
     a_product := seeds[0]
@@ -103,7 +103,7 @@ def srash64() {
     f_high ; f_low := f_product * f_prime
     g_high ; g_low := g_product * g_prime
     h_high ; h_low := h_product * h_prime
-    
+
     counter += 1
 
     a_sum += a_high

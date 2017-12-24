@@ -1,6 +1,6 @@
 title   fash256.x64.asm: fash256 for x64.
 
-; 2017-06-25
+; 2017-12-24
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
