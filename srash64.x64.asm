@@ -1,6 +1,6 @@
 title   srash64.x64.asm: srash64 for x64.
 
-; 2017-07-24
+; 2017-12-24
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -18,7 +18,7 @@ public srash64_dump;(seeds: uint64[16])
 ; programming languages do not, which is why this is written in assembly
 ; language.
 
-; srash64 requires 1024 bits of seed. At least one of those bits must be a 1.
+; srash64 requires 1024 bits of seed.
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
