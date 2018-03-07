@@ -198,8 +198,8 @@ void rash64_seed(uint64 seed) {
 uint64 rash64() {
     r64_result ^= r64_counter;
     r64_counter += 1;
-    r64_sum += high_umul64(r64_result, 9999999999999999961LL);
-    r64_result  = low_umul64(r64_result, 9999999999999999961LL) ^ r64_sum;
+    r64_sum += high_umul64(r64_result, 11111111111111111027LL);
+    r64_result  = low_umul64(r64_result, 11111111111111111027LL) ^ r64_sum;
     return r64_result;
 }
 
