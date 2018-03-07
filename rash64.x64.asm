@@ -1,6 +1,6 @@
 title   rash64.x64.asm: rash64 for x64.
 
-; 2017-07-24
+; 2018-03-07
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -61,18 +61,19 @@ pad macro
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-; Constant:
+; Constants:
 
-prime     equ     08AC7230489E7FFD9h ;  9999999999999999961
 prime_3   equ     02E426101834D5517h ;  3333333333333333271
+prime_8   equ     07B5BAD595E238E31h ;  8888888888888888881
+prime_9   equ     08AC7230489E7FFD9h ;  9999999999999999961
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 rash64_state segment page write
 
+counter   qword   0
 result    qword   0
 sum       qword   0
-counter   qword   0
 
 rash64_state ends
 
@@ -82,11 +83,11 @@ rash64_code segment para execute
 
 rash64_seed: function_with_one_parameter;(seed: uint64)
 
+    mov     r8,prime_8
     mov     r2,prime_3
-    xor     r0,r0
-    mov     result,r1
+    mov     counter,r1
+    mov     result,r8
     mov     sum,r2
-    mov     counter,r0
     ret
 
     pad; -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -100,7 +101,7 @@ rash64:
 
     mov     r0,result   ; high ; low := (result xor counter) * prime
     mov     r8,counter
-    mov     r2,prime
+    mov     r2,prime_9
     xor     r0,r8
     mov     r1,sum
     mul     r2

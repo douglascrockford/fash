@@ -185,14 +185,14 @@ void fash256_end(uint64 *result) {
     result[3] = f256_d_result;
 }
 
+static uint64 r64_counter;
 static uint64 r64_result;
 static uint64 r64_sum;
-static uint64 r64_counter;
 
 void rash64_seed(uint64 seed) {
-    r64_result = seed;
+    r64_counter = seed;
+    r64_result = 8888888888888888881LL;
     r64_sum = 3333333333333333271LL;
-    r64_counter = 0;
 }
 
 uint64 rash64() {

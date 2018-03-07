@@ -19,22 +19,24 @@ pre {
 <body>
 <h1>Rash64: The Fast Insecure Random Number Generator Function</h1>
 <p><a href="crockford.com">Douglas Crockford</a><br>
-  2017-12-24</p>
-<p> Rash64 is a fast but insecure random number generator function. It is an adaptation of <a href="fash64.html">Fash64</a>.</p>
+  2018-03-07</p>
+<p>Rash64 is a fast but insecure random number generator function. It is an
+adaptation of <a href="fash64.html">Fash64</a>. It hashs a sequence of
+integers, returning a random number at each step.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
 def prime := 9999999999999999961
 
 # The state of the random number generator function is kept in 3 variables.
 
+var counter: uint64
 var result: uint64
 var sum: uint64
-var counter: uint64
 
 def rash64_seed(seed: uint64) {
-    result := seed
+    counter := seed
+    result := 8888888888888888881
     sum := 3333333333333333271
-    counter := 0
 }
 
 def rash64() {
