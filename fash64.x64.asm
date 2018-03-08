@@ -1,6 +1,6 @@
 title   fash64.x64.asm: fash64 for x64.
 
-; 2017-11-02
+; 2018-03-08
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -48,7 +48,7 @@ r7      equ rdi
 ; conventions about which registers may be clobbered and which must be
 ; preserved. This code lives in the intersection.
 
-; Registers r1, r2, r8, r9, r11, and r10 are clobbered. Register r0 is the
+; Registers r1, r2, r8, r9, r10, and r11 are clobbered. Register r0 is the
 ; return value. The other registers are not disturbed.
 
 ; This has not yet been tested on Unix.
@@ -75,18 +75,18 @@ pad macro
     align   16
     endm
 
-; The key to fash is multiplication by a big prime number.
+; The key to fash is multiplication by prime_11.
 
-prime       equ     09a3298afb5ac7173h ; 11111111111111111027
-product_1st equ     07b5bad595e238e31h ;  8888888888888888881
-sum_1st     equ     02E426101834D5517h ;  3333333333333333271
+prime_11    equ     09A3298AFB5AC7173h ; 11111111111111111027
+prime_8     equ     07B5BAD595E238E31h ;  8888888888888888881
+prime_3     equ     02E426101834D5517h ;  3333333333333333271
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 fash64_state segment para write
 
-product qword   product_1st
-sum     qword   sum_1st
+product     qword   prime_8
+sum         qword   prime_3
 
 fash64_state ends
 
@@ -97,16 +97,16 @@ fash64_code segment para execute
 fash64_begin:
 
 ; Register assignments:
-;   r0  product
-;   r8  sum
+;   r8  product
+;   r9  sum
 
-; product := product_1st
-; sum := sum_1st
+; product := prime_8
+; sum := prime_3
 
-    mov     r0,product_1st
-    mov     r8,sum_1st
-    mov     product,r0
-    mov     sum,r8
+    mov     r8,prime_8
+    mov     r9,prime_3
+    mov     product,r8
+    mov     sum,r9
     xor     r0,r0
     ret
 
@@ -120,18 +120,18 @@ fash64_word: function_with_one_parameter;(word: uint64)
 ;   r1  word
 ;   r2  high
 ;   r8  sum
-;   r9  prime
+;   r11 prime_11
 
-;   high, low := (word xor product) * prime
+;   high; low := (word xor product) * prime_11
 ;   sum := high + sum
 ;   product := sum xor low
 
     mov     r0,product
     mov     r8,sum
-    mov     r9,prime
+    mov     r11,prime_11
 
     xor     r0,r1       ; r0 is mixed with the word
-    mul     r9          ; r2,r0 is the unsigned product of r0 * prime
+    mul     r11         ; r2;r0 is the unsigned product of r0 * prime_11
     add     r8,r2       ; r8 is the sum of the high halves
     xor     r0,r8       ; r0 is the mix of the low product and sum
 
@@ -148,15 +148,15 @@ fash64_block: function_with_two_parameters;(block: uint64[], length: uint64)
 ;   r0  product
 ;   r2  high
 ;   r8  sum
-;   r9  prime
+;   r9  block pointer
 ;   r10 block length
-;   r11 block pointer
+;   r11 prime_11
 
     mov     r0,product
     mov     r8,sum
-    mov     r9,prime
+    mov     r11,prime_11
     mov     r10,r2      ; r10 is block length
-    mov     r11,r1      ; r11 is the block pointer
+    mov     r9,r1       ; r9 is the block pointer
 
 ; Make sure the block is not empty.
 
@@ -166,9 +166,9 @@ fash64_block: function_with_two_parameters;(block: uint64[], length: uint64)
 
 each:
 
-    xor     r0,[r11]    ; r0 is mixed with a word
-    add     r11,8       ; point r11 to the next word
-    mul     r9          ; r2,r0 is the unsigned product of r0 * prime
+    xor     r0,[r9]     ; r0 is mixed with a word
+    add     r9,8        ; point r9 to the next word
+    mul     r11         ; r2;r0 is the unsigned product of r0 * prime_11
     add     r8,r2       ; r8 is the sum of the high halves
     xor     r0,r8       ; r0 is the mix of the low product and sum
     sub     r10,1       ; decrement the length
