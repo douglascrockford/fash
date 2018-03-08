@@ -26,10 +26,10 @@ pre {
 <p>Fash256 is a quadrupling of  <a href="fash64.html">Fash64</a>.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
-def a_prime := 11111111111111111027
-def b_prime := 9999999999999999961
-def c_prime := 7777777777777777687
-def d_prime := 5555555555555555533
+def prime_11 := 11111111111111111027
+def prime_9 := 9999999999999999961
+def prime_7 := 7777777777777777687
+def prime_5 := 5555555555555555533
 
 # The state of the hash function is kept in eight variables.
 
@@ -79,10 +79,10 @@ def fash256_word(word: uint64) {
 # Mix the word with the current state of the hash
 # and multiply it with the big primes.
 
-    a_high ; a_low := (a_result xor word) * a_prime
-    b_high ; b_low := (b_result xor word) * b_prime
-    c_high ; c_low := (c_result xor word) * c_prime
-    d_high ; d_low := (d_result xor word) * d_prime
+    a_high ; a_low := (a_result xor word) * prime_11
+    b_high ; b_low := (b_result xor word) * prime_9
+    c_high ; c_low := (c_result xor word) * prime_7
+    d_high ; d_low := (d_result xor word) * prime_5
 
 # Add the high part to the sum.
 

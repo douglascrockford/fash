@@ -1,6 +1,6 @@
 title   srash64.x64.asm: srash64 for x64.
 
-; 2017-12-24
+; 2018-03-08
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -71,14 +71,14 @@ pad macro
 
 ; Constants:
 
-a_prime     equ     09a3298afb5ac7173h ; 11111111111111111027
-b_prime     equ     08AC7230489E7FFD9h ;  9999999999999999961
-c_prime     equ     07B5BAD595E238E31h ;  8888888888888888881
-d_prime     equ     06BF037AE325F1C17h ;  7777777777777777687
-e_prime     equ     05C84C203069AAA7Bh ;  6666666666666666619
-f_prime     equ     04D194C57DAD638CDh ;  5555555555555555533
-g_prime     equ     03DADD6ACAF11C6F9h ;  4444444444444444409
-h_prime     equ     02E426101834D5517h ;  3333333333333333271
+prime_11    equ     09A3298AFB5AC7173h ; 11111111111111111027
+prime_9     equ     08AC7230489E7FFD9h ;  9999999999999999961
+prime_8     equ     07B5BAD595E238E31h ;  8888888888888888881
+prime_7     equ     06BF037AE325F1C17h ;  7777777777777777687
+prime_6     equ     05C84C203069AAA7Bh ;  6666666666666666619
+prime_5     equ     04D194C57DAD638CDh ;  5555555555555555533
+prime_4     equ     03DADD6ACAF11C6F9h ;  4444444444444444409
+prime_3     equ     02E426101834D5517h ;  3333333333333333271
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -167,11 +167,11 @@ srash64:
 ;   r0  low
 ;   r2  high
 
-;       high ; low := (a_product xor counter) * a_prime
+;       high ; low := (a_product xor counter) * prime_11
 
     mov     r8,a_product
     mov     r10,counter
-    mov     r0,a_prime
+    mov     r0,prime_11
     xor     r8,r10
     mov     r9,a_sum
     mul     r8
@@ -190,10 +190,10 @@ srash64:
     add     r9,r2
     mov     a_sum,r9
 
-;       high ; low := b_product * b_prime
+;       high ; low := b_product * prime_9
 
     mov     r10,b_product
-    mov     r0,b_prime
+    mov     r0,prime_9
     mov     r11,b_sum
     mul     r10
 
@@ -208,10 +208,10 @@ srash64:
     add     r11,r2
     mov     b_sum,r11
 
-;       high ; low := c_product * c_prime
+;       high ; low := c_product * prime_8
 
     mov     r10,c_product
-    mov     r0,c_prime
+    mov     r0,prime_8
     mul     r10
 
 ;       c_product := low xor b_sum
@@ -225,10 +225,10 @@ srash64:
     add     r9,r2
     mov     c_sum,r9
 
-;       high ; low := d_product * d_prime
+;       high ; low := d_product * prime_7
 
     mov     r10,d_product
-    mov     r0,d_prime
+    mov     r0,prime_7
     mov     r11,d_sum
     mul     r10
 
@@ -242,10 +242,10 @@ srash64:
     add     r11,r2
     mov     d_sum,r11
 
-;       high ; low := e_product * e_prime
+;       high ; low := e_product * prime_6
 
     mov     r10,e_product
-    mov     r0,e_prime
+    mov     r0,prime_6
     mov     r9,e_sum
     mul     r10
 
@@ -259,10 +259,10 @@ srash64:
     add     r9,r2
     mov     e_sum,r9
 
-;       high ; low := f_product * f_prime
+;       high ; low := f_product * prime_5
 
     mov     r10,f_product
-    mov     r0,f_prime
+    mov     r0,prime_5
     mov     r11,f_sum
     mul     r10
 
@@ -276,10 +276,10 @@ srash64:
     add     r11,r2
     mov     f_sum,r11
 
-;       high ; low := g_product * g_prime
+;       high ; low := g_product * prime_4
 
     mov     r10,g_product
-    mov     r0,g_prime
+    mov     r0,prime_4
     mov     r9,g_sum
     mul     r10
 
@@ -293,10 +293,10 @@ srash64:
     add     r9,r2
     mov     g_sum,r9
 
-;       high ; low := h_product * h_prime
+;       high ; low := h_product * prime_3
 
     mov     r10,h_product
-    mov     r0,h_prime
+    mov     r0,prime_3
     mov     r11,h_sum
     mul     r10
 

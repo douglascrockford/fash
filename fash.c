@@ -1,6 +1,6 @@
 /*  fash.c
     Douglas Crockford
-    2017-12-24
+    2018-03-08
 
     Public Domain
 
@@ -16,6 +16,17 @@
 
 #include "uint64.h"
 #include "fash.h"
+
+#define prime_11 (11111111111111111027LL)
+#define prime_9   (9999999999999999961LL)
+#define prime_8   (8888888888888888881LL)
+#define prime_7   (7777777777777777687LL)
+#define prime_6   (6666666666666666619LL)
+#define prime_5   (5555555555555555533LL)
+#define prime_4   (4444444444444444409LL)
+#define prime_3   (3333333333333333271LL)
+#define prime_2   (2222222222222222177LL)
+#define prime_1   (1111111111111111037LL)
 
 static uint64 high_umul64(uint64 a, uint64 b) {
 
@@ -94,15 +105,15 @@ static uint64 f64_product;
 static uint64 f64_sum;
 
 void fash64_begin() {
-    f64_product = 8888888888888888881LL;
-    f64_sum = 3333333333333333271LL;
+    f64_product = prime_8;
+    f64_sum = prime_3;
 
 }
 
 void fash64_word(uint64 word) {
     word ^= f64_product;
-    uint64 low = low_umul64(word, 11111111111111111027LL);
-    uint64 high = high_umul64(word, 11111111111111111027LL);
+    uint64 low = low_umul64(word, prime_11);
+    uint64 high = high_umul64(word, prime_11);
     f64_sum += high;
     f64_product = f64_sum ^ low;
 }
@@ -130,15 +141,15 @@ uint64 fash64_end() {
 
 
 void fash256_begin() {
-    f256_a_result = 8888888888888888881LL;
-    f256_b_result = 6666666666666666619LL;
-    f256_c_result = 4444444444444444409LL;
-    f256_d_result = 2222222222222222177LL;
+    f256_a_result = prime_8;
+    f256_b_result = prime_6;
+    f256_c_result = prime_4;
+    f256_d_result = prime_2;
 
-    f256_a_sum = 7777777777777777687LL;
-    f256_b_sum = 5555555555555555533LL;
-    f256_c_sum = 3333333333333333271LL;
-    f256_d_sum = 1111111111111111037LL;
+    f256_a_sum = prime_7;
+    f256_b_sum = prime_5;
+    f256_c_sum = prime_3;
+    f256_d_sum = prime_1;
 }
 
 void fash256_word(uint64 word) {
@@ -146,15 +157,15 @@ void fash256_word(uint64 word) {
      Mix the word with the current state of the hash
     and multiply it with the big primes.
 */
-    uint64 a_low = low_umul64(f256_a_result ^ word, 11111111111111111027LL);
-    uint64 b_low = low_umul64(f256_b_result ^ word, 9999999999999999961LL);
-    uint64 c_low = low_umul64(f256_c_result ^ word, 7777777777777777687LL);
-    uint64 d_low = low_umul64(f256_d_result ^ word, 5555555555555555533LL);
+    uint64 a_low = low_umul64(f256_a_result ^ word, prime_11);
+    uint64 b_low = low_umul64(f256_b_result ^ word, prime_9);
+    uint64 c_low = low_umul64(f256_c_result ^ word, prime_7);
+    uint64 d_low = low_umul64(f256_d_result ^ word, prime_5);
 
-    uint64 a_high = high_umul64(f256_a_result ^ word, 11111111111111111027LL);
-    uint64 b_high = high_umul64(f256_b_result ^ word, 9999999999999999961LL);
-    uint64 c_high = high_umul64(f256_c_result ^ word, 7777777777777777687LL);
-    uint64 d_high = high_umul64(f256_d_result ^ word, 5555555555555555533LL);
+    uint64 a_high = high_umul64(f256_a_result ^ word, prime_11);
+    uint64 b_high = high_umul64(f256_b_result ^ word, prime_9);
+    uint64 c_high = high_umul64(f256_c_result ^ word, prime_7);
+    uint64 d_high = high_umul64(f256_d_result ^ word, prime_5);
 /*
     Add the high parts to the sums.
 */
@@ -191,15 +202,15 @@ static uint64 r64_sum;
 
 void rash64_seed(uint64 seed) {
     r64_counter = seed;
-    r64_result = 8888888888888888881LL;
-    r64_sum = 3333333333333333271LL;
+    r64_result = prime_8;
+    r64_sum = prime_3;
 }
 
 uint64 rash64() {
     r64_result ^= r64_counter;
     r64_counter += 1;
-    r64_sum += high_umul64(r64_result, 11111111111111111027LL);
-    r64_result  = low_umul64(r64_result, 11111111111111111027LL) ^ r64_sum;
+    r64_sum += high_umul64(r64_result, prime_11);
+    r64_result  = low_umul64(r64_result, prime_11) ^ r64_sum;
     return r64_result;
 }
 
@@ -245,23 +256,23 @@ uint64 srash64() {
     sr_a_product ^= sr_counter;
     sr_counter += 1;
 
-    uint64 a_low = low_umul64(sr_a_product, 11111111111111111027LL);
-    uint64 b_low = low_umul64(sr_b_product, 9999999999999999961LL);
-    uint64 c_low = low_umul64(sr_c_product, 8888888888888888881LL);
-    uint64 d_low = low_umul64(sr_d_product, 7777777777777777687LL);
-    uint64 e_low = low_umul64(sr_e_product, 6666666666666666619LL);
-    uint64 f_low = low_umul64(sr_f_product, 5555555555555555533LL);
-    uint64 g_low = low_umul64(sr_g_product, 4444444444444444409LL);
-    uint64 h_low = low_umul64(sr_h_product, 3333333333333333271LL);
+    uint64 a_low = low_umul64(sr_a_product, prime_11);
+    uint64 b_low = low_umul64(sr_b_product, prime_9);
+    uint64 c_low = low_umul64(sr_c_product, prime_8);
+    uint64 d_low = low_umul64(sr_d_product, prime_7);
+    uint64 e_low = low_umul64(sr_e_product, prime_6);
+    uint64 f_low = low_umul64(sr_f_product, prime_5);
+    uint64 g_low = low_umul64(sr_g_product, prime_4);
+    uint64 h_low = low_umul64(sr_h_product, prime_3);
 
-    sr_a_sum += high_umul64(sr_a_product, 11111111111111111027LL);
-    sr_b_sum += high_umul64(sr_b_product, 9999999999999999961LL);
-    sr_c_sum += high_umul64(sr_c_product, 8888888888888888881LL);
-    sr_d_sum += high_umul64(sr_d_product, 7777777777777777687LL);
-    sr_e_sum += high_umul64(sr_e_product, 6666666666666666619LL);
-    sr_f_sum += high_umul64(sr_f_product, 5555555555555555533LL);
-    sr_g_sum += high_umul64(sr_g_product, 4444444444444444409LL);
-    sr_h_sum += high_umul64(sr_h_product, 3333333333333333271LL);
+    sr_a_sum += high_umul64(sr_a_product, prime_11);
+    sr_b_sum += high_umul64(sr_b_product, prime_9);
+    sr_c_sum += high_umul64(sr_c_product, prime_8);
+    sr_d_sum += high_umul64(sr_d_product, prime_7);
+    sr_e_sum += high_umul64(sr_e_product, prime_6);
+    sr_f_sum += high_umul64(sr_f_product, prime_5);
+    sr_g_sum += high_umul64(sr_g_product, prime_4);
+    sr_h_sum += high_umul64(sr_h_product, prime_3);
 
     sr_a_product = a_low ^ sr_h_sum;
     sr_b_product = b_low ^ sr_a_sum;

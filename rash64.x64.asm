@@ -101,7 +101,7 @@ rash64:
 
     mov     r0,result   ; high ; low := (result xor counter) * prime
     mov     r8,counter
-    mov     r2,prime_9
+    mov     r2,prime_11
     xor     r0,r8
     mov     r1,sum
     mul     r2

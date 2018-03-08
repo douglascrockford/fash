@@ -1,6 +1,6 @@
 title   fash256.x64.asm: fash256 for x64.
 
-; 2017-12-24
+; 2018-03-08
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -79,20 +79,16 @@ pad macro
 
 ; Constants:
 
-a_prime         equ     09a3298afb5ac7173h ; 11111111111111111027
-b_prime         equ     08AC7230489E7FFD9h ;  9999999999999999961
-c_prime         equ     06BF037AE325F1C17h ;  7777777777777777687
-d_prime         equ     04D194C57DAD638CDh ;  5555555555555555533
-
-a_1st_result    equ     07B5BAD595E238E31h ;  8888888888888888881
-b_1st_result    equ     05C84C203069AAA7Bh ;  6666666666666666619
-c_1st_result    equ     03DADD6ACAF11C6F9h ;  4444444444444444409
-d_1st_result    equ     01ED6EB565788E361h ;  2222222222222222177
-
-a_1st_sum       equ     06BF037AE325F1C17h ;  7777777777777777687
-b_1st_sum       equ     04D194C57DAD638CDh ;  5555555555555555533
-c_1st_sum       equ     02E426101834D5517h ;  3333333333333333271
-d_1st_sum       equ     00F6B75AB2BC4717Dh ;  1111111111111111037
+prime_11        equ     09a3298afb5ac7173h ; 11111111111111111027
+prime_9         equ     08AC7230489E7FFD9h ;  9999999999999999961
+prime_8         equ     07B5BAD595E238E31h ;  8888888888888888881
+prime_7         equ     06BF037AE325F1C17h ;  7777777777777777687
+prime_6         equ     05C84C203069AAA7Bh ;  6666666666666666619
+prime_5         equ     04D194C57DAD638CDh ;  5555555555555555533
+prime_4         equ     03DADD6ACAF11C6F9h ;  4444444444444444409
+prime_3         equ     02E426101834D5517h ;  3333333333333333271
+prime_2         equ     01ED6EB565788E361h ;  2222222222222222177
+prime_1         equ     00F6B75AB2BC4717Dh ;  1111111111111111037
 
 ;  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -119,29 +115,29 @@ fash256_begin:
 
 ; Initialize the products and sums.
 
-; a_result := a_1st_result
-; b_result := b_1st_result
-; c_result := c_1st_result
-; d_result := d_1st_result
+; a_result := prime_8
+; b_result := prime_6
+; c_result := prime_4
+; d_result := prime_2
 
-    mov     r8,a_1st_result
-    mov     r9,b_1st_result
-    mov     r10,c_1st_result
-    mov     r11,d_1st_result
+    mov     r8,prime_8
+    mov     r9,prime_6
+    mov     r10,prime_4
+    mov     r11,prime_2
     mov     a_result,r8
     mov     b_result,r9
     mov     c_result,r10
     mov     d_result,r11
 
-; a_sum := a_1st_sum
-; b_sum := b_1st_sum
-; c_sum := c_1st_sum
-; d_sum := d_1st_sum
+; a_sum := prime_7
+; b_sum := prime_5
+; c_sum := prime_3
+; d_sum := prime_1
 
-    mov     r8,a_1st_sum
-    mov     r9,b_1st_sum
-    mov     r10,c_1st_sum
-    mov     r11,d_1st_sum
+    mov     r8,prime_7
+    mov     r9,prime_5
+    mov     r10,prime_3
+    mov     r11,prime_1
     mov     a_sum,r8
     mov     b_sum,r9
     mov     c_sum,r10
@@ -171,7 +167,7 @@ fash256_word: function_with_one_parameter;(word: uint64)
 
     mov     r11,a_result    ; r11 := a_result
     mov     r9,a_sum        ; r9 := a_sum
-    mov     r0,a_prime      ; ro := a_prime
+    mov     r0,prime_11     ; ro := prime_11
     xor     r11,r1          ; r11 := r11 xor word
     mul     r11             ; r2, r0 := r11 * r0
     mov     r8,b_result     ; r8 := b_result
@@ -182,7 +178,7 @@ fash256_word: function_with_one_parameter;(word: uint64)
     mov     a_sum,r2        ; a_sum := r2
 
     xor     r8,r1           ; r8 := r8 xor word
-    mov     r0,b_prime      ; r0 := b_prime
+    mov     r0,prime_9      ; r0 := prime_9
     mul     r8              ; r2, r0 := r8 * r0
     mov     r8,c_result     ; r8 := c_result
     xor     r0,r10          ; r0 := r0 xor r10
@@ -193,7 +189,7 @@ fash256_word: function_with_one_parameter;(word: uint64)
     mov     b_sum,r2        ; b_sum := r2
 
     xor     r8,r1           ; r8 := r8 xor word
-    mov     r0,c_prime      ; r0 := c_prime
+    mov     r0,prime_7      ; r0 := prime_7
     mul     r8              ; r2, r0 := r8 * r0
     mov     r8,d_result     ; r8 := d_result
     xor     r0,r10          ; r0 := r0 xor r10
@@ -204,7 +200,7 @@ fash256_word: function_with_one_parameter;(word: uint64)
     mov     c_sum,r2        ; c_sum := r2
 
     xor     r8,r1           ; r8 := r8 xor word
-    mov     r0,d_prime      ; r0 := d_prime
+    mov     r0,prime_5      ; r0 := prime_5
     mul     r8              ; r2, r0 := r8 * r0
     add     r2,r9           ; r2 := r2 + r9
     xor     r0,r10          ; r0 := r0 xor r10
@@ -267,26 +263,26 @@ fash256_block: function_with_two_parameters;(block: uint64[], length: uint64)
 each:
 
     mov     r3,[r6]     ; r3 is the next word
-    mov     r0,a_prime
+    mov     r0,prime_11
     add     r6,8        ; advance the block pointer
     xor     r8,r3       ; r8 is a_result xor word
 
     mul     r8
     xor     r9,r3       ; r9 is b_result xor word
     mov     r8,r0       ; r8 is low
-    mov     r0,b_prime
+    mov     r0,prime_9
     add     r12,r2      ; r12 is high + a_sum
 
     mul     r9
     xor     r10,r3      ; r10 is c_result xor word
     mov     r9,r0       ; r9 is low
-    mov     r0,c_prime
+    mov     r0,prime_7
     add     r13,r2      ; r13 is high + b_sum
 
     mul     r10
     xor     r11,r3      ; r0 is d_result xor word
     mov     r10,r0      ; r10 is low
-    mov     r0,d_prime
+    mov     r0,prime_5
     add     r14,r2      ; r14 is high + c_sum
 
     mul     r11

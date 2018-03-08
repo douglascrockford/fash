@@ -23,14 +23,14 @@ pre {
 <p>It is an adaptation of <a href="fash256.html">Fash256</a>.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
-def a_prime := 11111111111111111027
-def b_prime := 9999999999999999961
-def c_prime := 8888888888888888881
-def d_prime := 7777777777777777687
-def e_prime := 6666666666666666619
-def f_prime := 5555555555555555533
-def g_prime := 4444444444444444409
-def h_prime := 3333333333333333271
+def prime_11 := 11111111111111111027
+def prime_9 := 9999999999999999961
+def prime_8 := 8888888888888888881
+def prime_7 := 7777777777777777687
+def prime_6 := 6666666666666666619
+def prime_5 := 5555555555555555533
+def prime_4 := 4444444444444444409
+def prime_3 := 3333333333333333271
 
 # The state of the random number generator function is kept in 17 variables.
 
@@ -54,8 +54,8 @@ var counter: uint64
 
 def srash64_seed(seeds: array of 16 uint64) {
 
-# The srash64_seed function initializes the srash64 rng function's state. The seed contains 1024 bits.
-# The seed must contain at least one 1 bit.
+# The srash64_seed function initializes the srash64 rng function's state.
+# The seed contains 1024 bits.
 
     a_product := seeds[0]
     a_sum := seeds[1]
@@ -95,14 +95,14 @@ def srash64() {
     var g_low: uint64
     var h_low: uint64
 
-    a_high ; a_low := (a_product xor counter) * a_prime
-    b_high ; b_low := b_product * b_prime
-    c_high ; c_low := c_product * c_prime
-    d_high ; d_low := d_product * d_prime
-    e_high ; e_low := e_product * e_prime
-    f_high ; f_low := f_product * f_prime
-    g_high ; g_low := g_product * g_prime
-    h_high ; h_low := h_product * h_prime
+    a_high ; a_low := (a_product xor counter) * prime_11
+    b_high ; b_low := b_product * prime_9
+    c_high ; c_low := c_product * prime_8
+    d_high ; d_low := d_product * prime_7
+    e_high ; e_low := e_product * prime_6
+    f_high ; f_low := f_product * prime_5
+    g_high ; g_low := g_product * prime_4
+    h_high ; h_low := h_product * prime_3
 
     counter += 1
 
@@ -124,7 +124,10 @@ def srash64() {
     g_product := g_low xor f_sum
     h_product := h_low xor g_sum
 
-    return ((a_product + e_product) xor (b_product + f_product)) + ((c_product + g_product) xor (d_product + h_product))
+    return (
+        ((a_product + e_product) xor (b_product + f_product))
+        + ((c_product + g_product) xor (d_product + h_product))
+    )
 }
 </pre>
 </body>
