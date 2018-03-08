@@ -25,7 +25,9 @@ adaptation of <a href="fash64.html">Fash64</a>. It hashs a sequence of
 integers, returning a random number at each step.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
-def prime := 11111111111111111027
+def prime_11 := 11111111111111111027
+def prime_8 := 8888888888888888881
+def prime_3 := 3333333333333333271
 
 # The state of the random number generator function is kept in 3 variables.
 
@@ -35,14 +37,14 @@ var sum: uint64
 
 def rash64_seed(seed: uint64) {
     counter := seed
-    result := 8888888888888888881
-    sum := 3333333333333333271
+    result := prime_8
+    sum := prime_3
 }
 
 def rash64() {
     var high
     var low
-    high ; low = (result xor counter) * prime
+    high ; low = (result xor counter) * prime_11
     counter += 1
     sum += high
     result = low xor sum
