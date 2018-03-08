@@ -172,7 +172,7 @@ each:
     add     r8,r2       ; r8 is the sum of the high halves
     xor     r0,r8       ; r0 is the mix of the low product and sum
     sub     r10,1       ; decrement the length
-    jnz     each        ; repeat for each thing
+    jnz     each        ; repeat for each word
 
     mov     sum,r8
     mov     product,r0
