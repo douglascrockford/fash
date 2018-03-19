@@ -1,6 +1,6 @@
 /*  fash.c
     Douglas Crockford
-    2018-03-08
+    2018-03-19
 
     Public Domain
 
@@ -190,10 +190,10 @@ void fash256_block(uint64 *block, uint64 length) {
 }
 
 void fash256_end(uint64 *result) {
-    result[0] = f256_a_result;
-    result[1] = f256_b_result;
-    result[2] = f256_c_result;
-    result[3] = f256_d_result;
+    result[0] = f256_a_result + f256_c_sum;
+    result[1] = f256_b_result + f256_d_sum;
+    result[2] = f256_c_result + f256_a_sum;
+    result[3] = f256_d_result + f256_b_sum;
 }
 
 static uint64 r64_counter;

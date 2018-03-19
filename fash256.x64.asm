@@ -1,6 +1,6 @@
 title   fash256.x64.asm: fash256 for x64.
 
-; 2018-03-08
+; 2018-03-18
 ; Public Domain
 
 ; No warranty expressed or implied. Use at your own risk. You have been warned.
@@ -331,6 +331,11 @@ fash256_end: function_with_one_parameter;(result: uint64[4])
     mov     r9,b_result
     mov     r10,c_result
     mov     r11,d_result
+
+    add     r8,c_sum
+    add     r9,d_sum
+    add     r10,a_sum
+    add     r11,b_sum
 
     mov     [r1],r8
     mov     [r1+8],r9

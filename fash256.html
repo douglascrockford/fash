@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <style>
 body {
 	backround-color: khaki;
@@ -19,11 +19,11 @@ pre {
 <body>
 <h1>Fash256: The Fast Hash Function</h1>
 <p><a href="crockford.com">Douglas Crockford</a><br>
-  2017-02-24</p>
+  2018-03-18</p>
 <p> Fash256 is an efficient hashing function. It crunches 64 bits at a time to
  produce a 256 bit result. It might possibly be a cryptographic hash function,
  but this has not been determined yet. More study is needed.</p>
-<p>Fash256 is a quadrupling of  <a href="fash64.html">Fash64</a>.</p>
+<p>Fash256 is a quadrupling of <a href="fash64.html">Fash64</a>.</p>
 <p>This is an implementation in a mythical language.</p>
 <pre>
 def prime_11 := 11111111111111111027
@@ -111,19 +111,22 @@ def fash256_block(block: array of uint64) {
 
 def fash256_end() {
     return [
-        a_result
-        b_result
-        c_result
-        d_result
+        a_result + c_sum
+        b_result + d_sum
+        c_result + a_sum
+        d_result + b_sum
     ];
 }</pre>
 <p>A cryptographic hash function should have five properties:</p>
 <ol>
-  <li>It is one way only. It is not  possible to reverse the hashing process to uncover the input.</li>
+  <li>It is one way only. It is not  possible to reverse the hashing process to
+    uncover the input.</li>
   <li>It is deterministic. A given input will always produce the same hash.</li>
-  <li>It is avalanching. A small change in the input will produce a big change in the hash.</li>
+  <li>It is avalanching. A small change in the input will produce a big change
+    in the hash.</li>
   <li>It is fast.</li>
-  <li>It is non-colliding. It is infeasible to find two inputs with the same hash.</li>
+  <li>It is non-colliding. It is infeasible to find two inputs with the same
+    hash.</li>
 </ol>
 <p><a href="fash64.html">Fash64</a> delivers on the first four, but fails badly
  on the fifth. First, its result is too short, which by itself makes collisions
